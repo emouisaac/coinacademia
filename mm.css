@@ -530,7 +530,7 @@ video{
         
     }
     .row2 .col2{
-        height: 35vh;
+        height: 40vh;
         margin-bottom: 15px;
         margin-left: 2px;
         margin-right: 2px;
@@ -539,7 +539,7 @@ video{
         padding: 12px 8px;
     }
     .row2 .col2 p{
-        font-size: 8px;
+        font-size: 7.5px;
         padding-left: 0px;
         padding-right: 0px;
         padding-top: 0px;
