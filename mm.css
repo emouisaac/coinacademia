@@ -462,159 +462,57 @@ video{
     justify-content: space-between;
     margin: 8%;
 }
-.row2 .col2{
-    flex-basis: 40%;
-    background-color: #fff;
-    height: 40vh;
-    margin-bottom: 5%;
-    background-size: cover;
-    padding: 20px 10px;
-    box-sizing: border-box;
+.row2 .col1{
+    background: none;
+    border:#000000 1px solid;
     border-radius: 10px;
-    box-shadow: #5f5f5f 0px 0px 10px;
-    transition: 1s;
+    box-shadow: #000000 0 0 29px;
 }
-.row2 .col2:hover{
-    box-shadow: #000 0px 0px 20px;
-    background-image: linear-gradient(rgba(189, 175, 152, 0.74), rgba(223, 223, 223, 0.685)), url('images/abt2.jpg');
-    transition: 0.5s;
-    background-size: 0;
-}
-.row2 .col2 h4{
-    font-size: 25px;
-    color: #000;
-    font-weight: 600;
-    text-align: left;
-    padding-left: 30px;
-}
-.row2 .col2 p{
-    font-size: 13px;
-    color: #646464;
-}
-.col2 a{
-    display: block;
+.row2 .col1 h4{
+    font-size: 30px;
+    padding: 10px;
     text-align: center;
-    text-decoration: none;
-    color: #f0f0f0;
-    background: #a05800;
-    padding: 2px;
-    border-radius: 5px;
-    font-style: normal;
-    box-shadow: #000000 0, 0, 29px;
-}
-.col2 a:hover{
-    background-color: #fb971e;
-    color: white;
-    transition: 0.5s;
+    color: #000;
+    
 }
 
-@media screen and (max-width: 768px){
-    .section4 .col2 a {
-        font-size: 12px;
-        padding: 5px 12px;
-        margin-top: 10px;
-        word-break: break-word;
-        white-space: normal;
-    }
-    .section4 h1{
-        font-size: 30px;
-        padding-top: 50px;
-    }
-    .section4{
-        margin-top: 0%;
-    }
-    .section4 p{
-        font-size: 15px;
-        padding-top: 20px;
-        margin-left: 10%;
-        margin-right: 10%;
-    }
-    .row2{
-        display: flex;
-        
-    }
-    .row2 .col2{
-        height: 50vh;
-        margin-bottom: 15px;
-        margin-left: 2px;
-        margin-right: 2px;
-        word-break: break-word;
-        white-space: normal;
-        padding: 12px 8px;
-    }
-    .row2 .col2 p{
-        font-size: 7.5px;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 0px;
-        text-align: left;
-        font-style: italic;
-        word-break: break-word;
-        white-space: normal;
-    }
-    .row2 .col2 h4{
-        font-size: 16px;
-        padding-left: 0px;
-        padding-top: 0px;
-        word-break: break-word;
-        white-space: normal;
-    }
+.row2 .col1 p{
+    font-size: 20px;
+    padding: 30px;
+    text-align: center;
+    color: #000;
 }
-@media screen and (min-width: 769px) {
+@media screen and (max-width: 768px) {
     .section4 {
-        height: 50vh;
-        padding-top: 0.2%;
-        padding-bottom: 3%;
-        background-color: #fff0da2b;
+        height: auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     .section4 h1 {
-        font-size: 60px;
-        padding-top: 30px;
+        font-size: 40px;
+        padding: 10px;
     }
     .section4 p {
-        font-size: 25px;
-        padding: 20px;
-        margin-left: 15%;
-        margin-right: 15%;
+        font-size: 18px;
+        padding: 10px;
     }
     .row2 {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 8%;
+        flex-direction: column;
+        align-items: center;
     }
-    .row2 .col2 {
-        flex-basis: 40%;
-        height: 35vh;
-        margin-bottom: 5%;
-        padding: 20px 10px;
-        border-radius: 10px;
-        box-shadow: #5f5f5f 0px 0px 10px;
-        background-size: cover;
-        transition: box-shadow 0.3s, background-image 0.5s;
+    .row2 .col1 {
+        width: 90%;
+        margin-bottom: 20px;
     }
-    .row2 .col2 h4 {
-        font-size: 23px;
-        padding-left: 30px;
+    .row2 .col1 h4 {
+        font-size: 24px;
+        padding: 10px;
     }
-    .row2 .col2 p {
-        font-size: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        text-align: left;
-    }
-    .col2 a {
+    .row2 .col1 p {
         font-size: 16px;
-        padding: 8px 30px;
-        margin: -20% 0 10% 0;
-        display: block;
-        background: #a05800;
-        color: #fff;
+        padding: 20px;
     }
-    .row2 .col2:hover {
-        box-shadow: #000 0px 0px 20px;
-        background-image: linear-gradient(rgba(189, 175, 152, 0.74), rgba(223, 223, 223, 0.685)), url('images/abt2.jpg');
-    }
+    
 }
 
 /*--------Testimonials-----------*/
