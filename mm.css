@@ -72,6 +72,9 @@ nav .fas{
         cursor: pointer;
         margin: 20px;
     }
+    .nav-links .fas{
+        font-size: 50px;
+    }
     .nav-links ul{
         padding: 30px;
     }
