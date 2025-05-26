@@ -556,7 +556,7 @@ video{
         white-space: normal;
     }
 }
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 769px) {
     .section4 {
         height: 50vh;
         padding-top: 0.2%;
@@ -581,7 +581,7 @@ video{
     }
     .row2 .col2 {
         flex-basis: 40%;
-        height: 30vh;
+        height: 45vh;
         margin-bottom: 5%;
         padding: 20px 10px;
         border-radius: 10px;
@@ -590,11 +590,11 @@ video{
         transition: box-shadow 0.3s, background-image 0.5s;
     }
     .row2 .col2 h4 {
-        font-size: 25px;
+        font-size: 23px;
         padding-left: 30px;
     }
     .row2 .col2 p {
-        font-size: 11px;
+        font-size: 10px;
         padding-left: 10px;
         padding-right: 10px;
         text-align: left;
