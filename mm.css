@@ -772,6 +772,7 @@ video{
         padding-top: 8px;
     }
     .footer p {
+        text-aline: center;
         font-size: 12px;
         padding-left: 10px;
         padding-right: 10px;
