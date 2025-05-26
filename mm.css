@@ -279,7 +279,6 @@ nav .fas{
     width: 100%;
     padding: 0;
     margin: 0;
-    transition: 1s;
 }
 video{
     width: 100%;
@@ -290,8 +289,7 @@ video{
 
 /*---------SECTION 3---------*/
 .section3{
-    width: 100%;
-    transition: 1s;
+    width: 100%
 }
 
 .section3 h1 {
@@ -532,7 +530,7 @@ video{
         
     }
     .row2 .col2{
-        height: auto;
+        height: 50vh;
         margin-bottom: 15px;
         margin-left: 2px;
         margin-right: 2px;
@@ -583,7 +581,7 @@ video{
     }
     .row2 .col2 {
         flex-basis: 40%;
-        height: 70vh;
+        height: 30vh;
         margin-bottom: 5%;
         padding: 20px 10px;
         border-radius: 10px;
