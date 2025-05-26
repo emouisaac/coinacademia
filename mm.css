@@ -735,6 +735,7 @@ video{
 
 /*-----footer------*/
 .footer{
+    
     background: #3f555d;
     width: 100%;
 }
@@ -745,9 +746,8 @@ video{
     font-size: 20px;
 }
 .footer p{
-    text-aline: center;
     padding-top: 8px;
-    padding-bottom: 10px
+    padding-bottom: 10px;
     text-align: center;
     font-size: 15px;
     padding-left: 20px;
@@ -772,7 +772,6 @@ video{
         padding-top: 8px;
     }
     .footer p {
-        text-aline: center;
         font-size: 12px;
         padding-left: 10px;
         padding-right: 10px;
@@ -807,5 +806,3 @@ video{
         margin-left: 7%;
     }
 }
-
-
