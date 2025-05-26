@@ -559,7 +559,7 @@ video{
 }
 @media screen and (max-width: 768px) {
     .testimonials {
-        margin-top: 700px;
+        margin-top: 0px;
         padding: 10px 0;
     }
     .testimonials h1 {
