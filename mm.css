@@ -603,7 +603,7 @@ video{
         font-size: 16px;
         padding: 8px 30px;
         margin: -20% 0 10% 0;
-        display: inline-block;
+        display: block;
         background: #a05800;
         color: #fff;
     }
