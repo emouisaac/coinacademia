@@ -530,7 +530,7 @@ video{
         
     }
     .row2 .col2{
-        height: 50vh;
+        height: 35vh;
         margin-bottom: 15px;
         margin-left: 2px;
         margin-right: 2px;
@@ -581,7 +581,7 @@ video{
     }
     .row2 .col2 {
         flex-basis: 40%;
-        height: 45vh;
+        height: 35vh;
         margin-bottom: 5%;
         padding: 20px 10px;
         border-radius: 10px;
@@ -771,6 +771,7 @@ video{
         padding-top: 8px;
     }
     .footer p {
+        text-align: center;
         font-size: 12px;
         padding-left: 10px;
         padding-right: 10px;
