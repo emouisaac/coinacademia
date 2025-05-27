@@ -711,3 +711,192 @@ video{
         margin-left: 7%;
     }
 }
+
+/*-------------------------------------------------   CHART PATTERNS   -----*/
+
+.charts1{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.charts1{
+    background-image: linear-gradient(rgba(249, 223, 94, 0.848), rgba(175, 149, 111, 0.629)), url('images/Chart\ P.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 60vh;
+    width: 100%;
+    transition: 2s;
+}
+.charts1 p{
+    font-size: 20px;
+    
+}
+.charts1 img{
+    background-color: #3f555dc2;
+}
+.charts1:hover{
+    background-position: 110%;
+}
+.charts2{
+    margin: 5% 2% 0 2%;
+}
+.cw h1{
+    font-size: 40px;
+    text-align: center;
+    padding: 2%;
+    box-shadow: #000 0 0 10px;
+}
+.cw{
+        background-color: #35461641;
+    }
+.cw h2{
+    font-size: 30px;
+    text-align: center;
+    padding-top: 2%;
+    color: #fda02f;
+    
+}
+.cw p{
+    font-size: 25px;
+    padding: 2% 20% 2% 20%;
+    text-align: center;
+    line-height: 150%;
+    
+}
+.rowx{
+    display: flex;
+    padding: 3% 0 0 0;
+    background: rgba(73, 76, 80, 0.081);
+
+}
+.colx{
+    position: static;
+    flex-basis: 30%;
+    background: #ffca9f65;
+    border-radius: 10px;
+    padding: 3%;
+    margin: 1%;
+}
+.colx h1{
+    font-size: 30px;
+    padding-top: 2%;
+
+}
+.colx a{
+    text-decoration: none;
+    color: #000;
+    line-height: 200%;
+    padding: 1% 1% 1% 2%;
+    margin-left: 5%;
+    line-break: auto;
+    font-size: 20px;
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.colx a:hover {
+
+    color: #fb971e;
+    background: #3f555d;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.coly{
+    flex-basis: 70%;
+}
+.sub-row1{
+    max-width: 90%;
+}
+.sub-row1 img{
+    border-radius: 10px;
+    width: 90%;
+    height: 70vh;
+    margin: 2% 5% 0% 5%;
+    box-shadow: #000 0 0 30px;
+}
+.sub-row1 h1{
+    font-size: 35px;
+    text-align: left;
+    padding: 3% 0 0 6% ;
+}
+.sub-row1 p{
+    font-size: 20px;
+    padding: 2%;
+}
+.sub-row1 p:hover{
+    font-style: oblique;
+    transition: 0.5s;
+}
+
+/* Custom styles for screens 768px and below */
+@media screen and (max-width: 768px) {
+    .charts1 {
+        height: 80vh;
+        background-position: center;
+    }
+    
+    .cw h1 {
+        font-size: 28px;
+        padding: 10px;
+        box-shadow: none;
+    }
+    .cw h2 {
+        font-size: 22px;
+        padding-top: 8px;
+        color: #a05800;
+    }
+    .cw p {
+        font-size: 14px;
+        padding: 10px 15% 10px 15%;
+    }
+    .rowx {
+        flex-direction: column;
+        padding: 10px 0 0 0;
+    }
+    .colx, .coly {
+        flex-basis: 100%;
+        margin: 10px 0;
+        padding: 10px;
+    }
+    .colx h1 {
+        font-size: 18px;
+        padding-top: 8px;
+    }
+    .colx a {
+        font-size: 14px;
+        padding: 4px 8px;
+        margin-left: 0;
+        display: block;
+    }
+    .sub-row1{
+        width: 100%;
+        margin-left: 3%;
+    }
+    .sub-row1 img {
+        width: 100%;
+        height: 30vh;
+        margin: 15px 10px;
+        box-shadow: #00000055 0 0 30px;
+
+    }
+    .sub-row1 h1 {
+        font-size: 30px;
+        padding: 20px 0 10px 0;
+        text-align: center;
+    }
+    .sub-row1 p {
+        font-size: 22px;
+        padding: 7px;
+        text-align: left;
+    }
+    .sub-row{
+        padding: 10%;
+    }
+    .sub-row h1{
+        font-size: 30px;
+    }
+    .sub-row a{
+        font-size: 20px;
+        margin-left: 5%;
+    }
+}
+
