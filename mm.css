@@ -720,7 +720,7 @@ video{
     padding: 0;
 }
 .charts1{
-    background-image: linear-gradient(rgba(249, 223, 94, 0.848), rgba(175, 149, 111, 0.629)), url('images/Chart\ P.jpg');
+    background-image: linear-gradient(rgba(249, 223, 94, 0.848), rgba(175, 149, 111, 0.629)), url('images/Chart P.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 60vh;
