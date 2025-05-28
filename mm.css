@@ -946,7 +946,7 @@ video{
     .chart-p p {
         text-align: left;
         font-size: 14px;
-        padding: 5px 30px 5px 30px;
+        padding: 5px 30px 10px 30px;
     }
     .chart-p .col1 {
         flex-basis: 100%;
