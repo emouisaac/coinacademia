@@ -913,4 +913,45 @@ video{
         margin-left: 5%;
     }
 }
+/*--------------------------CHAART PATERNS-----------*/
+.chart-p{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #3f555d4a;
+}
+
+.chart-p h1 {
+        text-align: center;
+        font-size: 50px;
+        color: #204036;
+        font-weight: 600;
+        padding: 5% 10% 2% 10%;
+    }
+.chart-p p{
+    font-size: 18px;
+    text-align: center;
+    padding: 5px 15% 5% 15%;
+    font-style:oblique;
+}
+
+.chart-p .col1{
+    flex-basis: 100%;
+}
+@media screen and (max-width: 768px) {
+    .chart-p h1 {
+        font-size: 28px;
+        padding: 20px 10px 10px 10px;
+    }
+    .chart-p p {
+        
+        font-size: 14px;
+        padding: 5px 30px 5px 30px;
+    }
+    .chart-p .col1 {
+        flex-basis: 100%;
+        margin: 10px 0;
+        padding: 10px;
+    }
+}
 
