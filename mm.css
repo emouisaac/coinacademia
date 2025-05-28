@@ -841,6 +841,9 @@ video{
         height: 80vh;
         background-position: center;
     }
+    .charts1 h1 {
+        font-size: 40px;
+    }
     
     .cw h1 {
         font-size: 28px;
