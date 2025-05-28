@@ -54,6 +54,9 @@ nav .fas{
     .nav-links ul li{
         display: block;
     }
+    .header {
+        height: 12vh;
+    }
     .nav-links{
         position: fixed;
         background: #5b4838;
