@@ -944,7 +944,7 @@ video{
         padding: 20px 10px 10px 10px;
     }
     .chart-p p {
-        
+        text-align: left;
         font-size: 14px;
         padding: 5px 30px 5px 30px;
     }
