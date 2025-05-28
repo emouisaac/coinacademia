@@ -729,6 +729,10 @@ video{
     margin: 0;
     transition: 2s;
 }
+.charts1 h1{
+    font-size: 60px;
+    
+}
 .charts1 p{
     font-size: 20px;
     
@@ -824,6 +828,7 @@ video{
 .sub-row1 p{
     font-size: 20px;
     padding: 2%;
+    padding-left: 2%;
 }
 .sub-row1 p:hover{
     font-style: oblique;
