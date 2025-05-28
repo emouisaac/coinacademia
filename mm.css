@@ -725,6 +725,8 @@ video{
     background-size: cover;
     height: 60vh;
     width: 100%;
+    padding-top: 0%;
+    margin: 0;
     transition: 2s;
 }
 .charts1 p{
@@ -733,6 +735,7 @@ video{
 }
 .charts1 img{
     background-color: #3f555dc2;
+    
 }
 .charts1:hover{
     background-position: 110%;
