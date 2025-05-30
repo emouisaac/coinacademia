@@ -122,6 +122,16 @@ nav .fas{
     justify-content: space-between;
     
 }
+.row h4{
+    display: inline-block;
+    color: #000;
+    background: #fccd21;
+    padding: 10px;
+    border: black 2px solid;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
 .col{
     flex-basis: 50%;
     text-align: right;
@@ -723,7 +733,7 @@ video{
     padding: 0;
 }
 .charts1{
-    background-image: linear-gradient(rgba(249, 223, 94, 0.848), rgba(175, 149, 111, 0.629)), url('images/Chart P.jpg');
+    background-image: linear-gradient(rgba(249, 223, 94, 0.848), rgba(175, 149, 111, 0.629)), url('images/All Charts.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 60vh;
