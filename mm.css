@@ -126,7 +126,7 @@ nav .fas{
     display: inline-block;
     color: #000;
     background: #fccd21;
-    padding: 10px;
+    padding: 3px;
     border: black 2px solid;
     border-radius: 5px;
     font-size: 20px;
@@ -856,6 +856,9 @@ video{
     }
     .charts1 h1 {
         font-size: 40px;
+    }
+    .charts1 p{
+        font-size: 18px
     }
     
     .cw h1 {
