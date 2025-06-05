@@ -11,7 +11,7 @@ $email_body = "User Name: $name.\n" .
               "Subject: $subject.\n" .
               "User Message: $message.\n";
 
-$to = 'emouisaac1@gmail.com';
+$to = 'admin@coinacademia.in';
 $headers = "From: $email_from\r\n";
 $headers .= "Reply-To: $visitor_email\r\n";
 
