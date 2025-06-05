@@ -17,23 +17,8 @@ $to = 'emouisaac1@gmail.com'; // Replace with your email address
 $headers = "From: $email_from\r\n";
 $headers .= "Reply-To: $visitor_email\r\n";
 mail($to, $email_subject, $email_body, $headers);
-if(!isset($_POST['submit'])) {
-    echo "Form not submitted correctly.";
-    exit;
-}
 // Check if the form fields are empty
 header("Location: ../index.html"); // Redirect to the homepage after submission
-if(empty($name) || empty($visitor_email) || empty($subject) || empty($message)) {
-    echo "All fields are required.";
-    exit;
-}
 
-
-
-if(mail($to, $email_subject, $email_body, $headers)) {
-    echo "Email sent successfully.";
-} else {
-    echo "Failed to send email.";
-}
 
 ?>
