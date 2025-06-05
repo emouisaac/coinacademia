@@ -976,49 +976,48 @@ video{
     }
 }
 
-/*--------------------------COMMENTS SECTION-----------*/
-
-.comments {
-    border: #5c5a5a 1px solid;
-    padding: 50px;
-    background-color: #edecec;
-    margin: 20px;
+/*--------------------------feedback-----------*/
+.Feedback{
+    width: 100%;
+    margin: 20px 0;
+    padding-left: 100px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    background: #3f555d4a;
 }
-.comments h1 {
-    text-align: center;
-    font-size: 30px;
-    color: #204036;
-    margin-bottom: 10px;
-}
-
-.comments p {
-    margin-left: 5%;
-    margin-right: 5%;
-    text-align: center;
+.Feedback h1 {
+        text-align: center;
+        font-size: 50px;
+        color: #204036;
+        font-weight: 600;
+        padding: 5% 10% 2% 10%;
+    }
+.Feedback p{
     font-size: 18px;
-    color: #5c5a5a;
-    line-height: 1.5;
+    text-align: center;
+    padding: 5px 15% 5% 15%;
+    font-style:oblique;
 }
-.comments input, .comments textarea {
+input[type="text"],
+input[type="email"], textarea {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    font-size: 18px;
+    margin: 5px 0 15px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
     box-sizing: border-box;
 }
-.comments button {
-    display: block;
+button[type="submit"] {
     background-color: #fb971e;
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 18px;
-    transition: 0.5s;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
 }
-.comments button:hover {
+button[type="submit"]:hover {
     background-color: #354616;
 }
