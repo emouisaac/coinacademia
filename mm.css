@@ -999,15 +999,16 @@ video{
     color: #5c5a5a;
     line-height: 1.5;
 }
-.comment-form input, .comment-form textarea {
-    font-size: 18px;
-    width: 97%;
+.comments input, .comments textarea {
+    width: 100%;
     padding: 10px;
     margin: 10px 0;
+    font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
-.comment-form button {
+.comments button {
     display: block;
     background-color: #fb971e;
     color: white;
@@ -1018,7 +1019,6 @@ video{
     font-size: 18px;
     transition: 0.5s;
 }
-.comment-form button:hover {
+.comments button:hover {
     background-color: #354616;
 }
-
