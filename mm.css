@@ -976,3 +976,49 @@ video{
     }
 }
 
+/*--------------------------COMMENTS SECTION-----------*/
+
+.comments {
+    border: #5c5a5a 1px solid;
+    padding: 50px;
+    background-color: #edecec;
+    margin: 20px;
+}
+.comments h1 {
+    text-align: center;
+    font-size: 30px;
+    color: #204036;
+    margin-bottom: 10px;
+}
+
+.comments p {
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    font-size: 18px;
+    color: #5c5a5a;
+    line-height: 1.5;
+}
+.comment-form input, .comment-form textarea {
+    font-size: 18px;
+    width: 97%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.comment-form button {
+    display: block;
+    background-color: #fb971e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.5s;
+}
+.comment-form button:hover {
+    background-color: #354616;
+}
+
