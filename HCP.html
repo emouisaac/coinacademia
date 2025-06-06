@@ -107,15 +107,29 @@
     </section>
     <section>
         <div class="Feedback">
-            <h1>YOUR FEEDBACK</h1>
-            <p>We value your feedback! Please share your thoughts or questions about this chart pattern.</p>
-            <p>Feel free to leave a comment below, and we'll get back to you as soon as possible.</p>
-            <form class="feedback-form" action="feedback.php" method="GET">
-                <input type="text" name="name" placeholder="Your Name" require>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="subject" placeholder="Subject" required>
-                <textarea rows="8" name="Comment" placeholder="Your Comment" required></textarea>
-                <button type="submit">Submit</button>
+            <h1>Your Feedback</h1>
+            <p>We value your feedback! Please share your thoughts or questions about this chart pattern. Feel free to leave a comment below, and we'll get back to you as soon as possible.</p>
+            <form action="feedback.php" method="POST">
+                
+                <label>
+                    Your name:
+                    <input type="text" name="name" required>
+                </label>
+                <label>
+                    Subject:
+                    <input type="text" name="subject" required>
+                </label>
+
+                <label>
+                    Your email:
+                    <input type="email" name="email">
+                </label>
+                <label>
+                    Your message:
+                    <textarea name="message"></textarea>
+                </label>
+            <!-- your other form fields go here -->
+                <button type="submit">Send</button>
             </form>
         </div>
     </section>
