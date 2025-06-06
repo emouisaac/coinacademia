@@ -1021,3 +1021,23 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #354616;
 }
+@media screen and (max-width: 768px) {
+    .Feedback {
+        padding: 20px;
+    }
+    .Feedback h1 {
+        font-size: 28px;
+        padding: 20px 10px 10px 10px;
+    }
+    .Feedback p {
+        text-align: left;
+        font-size: 14px;
+        padding: 5px 30px 10px 30px;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: calc(100% - 20px);
+        margin: 5px auto;
+    }
+}
