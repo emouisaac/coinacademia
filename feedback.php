@@ -1,8 +1,8 @@
 <?php
-    $name = $_GET['name'];
-    $mailForm = $_GET['email'];
-    $subject = $_GET['subject'];
-    $message = $_GET['message'];
+    $name = $_POST['name'];
+    $mailForm = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
 
     $email_from = 'info@coinacademia.in';
     $email_subject = "You have received an e-mail from ";
