@@ -1102,7 +1102,7 @@ button[type="submit"]:hover {
     }
     .P-Policy h2 {
         font-size: 20px;
-        padding: 15px 10px 5px 10px;
+        padding: 5px 30px 10px 30px;
     }
     .P-Policy p {
         text-align: left;
@@ -1117,7 +1117,7 @@ button[type="submit"]:hover {
         margin-bottom: 10px;
         font-size: 16px;
         line-height: 1.5;
-        margin-left: 20px; /* Adjusted for smaller screens */
+        margin-left: 30px; /* Adjusted for smaller screens */
     }
 
 }
