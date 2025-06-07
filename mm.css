@@ -1041,3 +1041,75 @@ button[type="submit"]:hover {
         margin: 5px auto;
     }
 }
+
+/*--------------------------Privacy policy-----------*/
+.P-Policy {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding-left: 100px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    background: #3f555d4a;
+}
+.P-Policy h1 {
+    text-align: center;
+    font-size: 50px;
+    color: #204036;
+    font-weight: 600;
+    padding: 5% 10% 2% 10%;
+}
+.P-Policy h2 {
+    text-align: left;
+    font-size: 30px;
+    color: #204036;
+    font-weight: 600;
+    padding: 2% 10% 1% 10%;
+}
+.P-Policy p {
+    font-size: 22px;
+    text-align: left;
+    padding: 0% 10% 2% 10%;
+    font-style: oblique;
+    line-height: 1.6;
+}
+.P-Policy ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+.P-Policy ul li {
+    margin-bottom: 10px;
+    font-size: 22px;
+    line-height: 1.5;
+    margin-left: 300px;
+}
+@media screen and (max-width: 768px) {
+    .P-Policy {
+        padding: 20px;
+    }
+    .P-Policy h1 {
+        font-size: 28px;
+        padding: 20px 10px 10px 10px;
+    }
+    .P-Policy h2 {
+        font-size: 20px;
+        padding: 15px 10px 5px 10px;
+    }
+    .P-Policy p {
+        text-align: left;
+        font-size: 14px;
+        padding: 5px 30px 10px 30px;
+    }
+    .P-Policy ul {
+        padding-left: 20px;
+        margin: 10px 0;
+    }
+    .P-Policy ul li {
+        margin-bottom: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-left: 20px; /* Adjusted for smaller screens */
+    }
+
+}
+
