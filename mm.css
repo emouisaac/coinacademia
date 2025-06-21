@@ -888,12 +888,12 @@ hr{
     padding-left: 2%;
     list-style: none;
     background:none;
-    position: fixed;
+    position: sticky;
 }
 
 .sub-row3{
     width: 100%;
-    position: static;
+    position: sticky;
     padding-left: 5%;
     list-style: none;
     background:none;
