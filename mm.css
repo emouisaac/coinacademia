@@ -1274,3 +1274,54 @@ button[type="submit"]:hover {
     }
     
 }
+
+/*--------------------------corrections-----------*/
+.chart-patterns {
+    width: 100%;
+    margin: 0;
+    padding-left: 100px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    background: #3f555d4a;
+}
+.chart-patterns h1 {
+    text-align: center;
+    font-size: 50px;
+    color: #e3a30d;
+    font-weight: 600;
+    padding: 5% 10% 2% 10%;
+}
+.chart-patterns p {
+    font-size: 18px;
+    text-align: center;
+    padding: 5px 15% 5% 15%;
+    font-style: oblique;
+}
+.rop{
+    
+    width: 100%;
+}
+@media screen and (max-width: 768px) {
+    .chart-patterns {
+        padding: 20px;
+    }
+    .chart-patterns h1 {
+        font-size: 28px;
+        padding: 20px 10px 10px 10px;
+    }
+    .chart-patterns p {
+        text-align: left;
+        font-size: 14px;
+        padding: 5px 30px 10px 30px;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
