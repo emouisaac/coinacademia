@@ -870,7 +870,7 @@ hr{
     font-size: 18px;
     padding: 2%;
     padding-left: 2%;
-    color: #ffffffca;
+    color: #000;
 
 }
 .sub-row1 a{
@@ -933,6 +933,7 @@ hr{
         margin: 10px 0;
         padding: 10px;
     }
+
     .colx h1 {
         font-size: 18px;
         padding-top: 8px;
