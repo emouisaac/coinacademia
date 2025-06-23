@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
     
 }
 .header{
@@ -809,78 +810,75 @@ video{
 
 }
 .colx{
-    position: static;
     flex-basis: 20%;
-    background: #ffd9ba;
-    padding: 3%;
-    margin: 0%;
-    margin-top: -60px;
-
+    margin: 0;
+    padding: 2%;
+    background: #c28710a3;
+    
+    
 }
 .colx h1{
-    font-size: 25px;
+    font-size: 30px;
     padding-top: 2%;
-
+    color: #191919;
+    text-align: left;
 }
 .colx a{
+    display: block;
     text-decoration: none;
-    color: #000;
-    line-height: 200%;
-    padding: 1% 1% 1% 2%;
-    margin-left: 0;
-    margin-right: 0;
-    line-break: auto;
-    list-style: none;
-    font-size: 17px;
-    font-style: italic;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.colx a:hover {
-
-    color: #fb971e;
-    background: #3f555d;
+    color: #000000b7;
+    padding: 5px;
     border-radius: 5px;
-    transition: 0.3s;
+    font-style: normal;
+    box-shadow: #000000 0, 0, 29px;
+    margin-left: 10%;
+    list-style: none;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
 }
 .coly{
-    flex-basis: 100%;
+    flex-basis: 80%;
+    margin: 0;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 100%;
+    
 }
-.sub-row1{
-    max-width: 90%;
-}
-.sub-row1 img{
-    border-radius: 10px;
-    width: 90%;
-    height: 70vh;
-    margin: 2% 5% 0% 5%;
-    box-shadow: #000 0 0 30px;
-}
-.sub-row1 h1{
+.coly h1{
     font-size: 35px;
-    text-align: left;
-    padding: 3% 0 0 6% ;
+    padding: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    color: #cf8002;
+    font-weight: 700;
 }
+.coly img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: #00000055 0 0 30px;
+}
+
 hr{
     width: 100%;
-    margin: 0 auto;
-    border: 6px solid #000;
-    margin-top: 4%;
-}
-.sub-row1 p{
-    font-size: 20px;
-    padding: 2%;
-    padding-left: 2%;
+    margin: 0;
+    border: 6px solid #544110;
 
 }
-.sub-row1 p:hover{
-    font-style: oblique;
-    transition: 0.5s;
+.sub-row1 p{
+    font-size: 18px;
+    padding: 2%;
+    padding-left: 2%;
+    color: #ffffffca;
+
 }
-.ttt hr{
-    width: 100%;
-    margin: 0 auto;
-    border: 6px solid #000;
-    margin-top: 0%;
+.sub-row1 a{
+    font-size: 20px;
+    text-decoration: none;
+    margin: 2%;
+    display: flex;
+    justify-content: center;
 }
 .sub-row{
     width: 100%;
@@ -949,12 +947,11 @@ hr{
         width: 100%;
         margin-left: 3%;
     }
-    .sub-row1 img {
-        width: 100%;
-        height: 30vh;
-        margin: 15px 10px;
-        box-shadow: #00000055 0 0 30px;
-
+    .coly img{
+        width: 95%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: #00000055 0 0 20px;
     }
     .sub-row1 h1 {
         font-size: 30px;
@@ -977,6 +974,11 @@ hr{
     .sub-row h1{
         font-size: 30px;
     }
+    hr{
+        width: 90%;
+        margin: 0 auto;
+        border: 4px solid #544110;
+    }
     .sub-row a{
         font-size: 20px;
         margin-left: 5%;
@@ -988,13 +990,13 @@ hr{
     height: 35vh;
     margin: 0;
     padding: 0;
-    background: #3f555d4a;
+    background: #295363b6;
 }
 
 .chart-p h1 {
         text-align: center;
         font-size: 50px;
-        color: #204036;
+        color: #dc802a;
         font-weight: 600;
         padding: 3% 10% 2% 10%;
     }
