@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Please fill in all fields');
                 return;
             }
-            fetch('/login', {
+        fetch('https://www.coinacademia.in/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Passwords do not match');
             return;
         }
-            fetch('/register', {
+        fetch('https://www.coinacademia.in/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password })
