@@ -1,23 +1,52 @@
+
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
-// Dummy user for demonstration (replace with DB lookup in production)
-const users = [
-	{ email: 'user@example.com', password: 'password123' }
-];
+// Registration route
+router.post('/register', async (req, res) => {
+	const { username, email, password, fullname } = req.body;
+	if (!username || !email || !password) {
+		return res.status(400).json({ error: 'All fields are required.' });
+	}
+	try {
+		const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+		if (existingUser) {
+			return res.status(409).json({ error: 'User already exists.' });
+		}
+		const user = new User({ username, email, password, fullname });
+		await user.save();
+		res.status(201).json({ message: 'Registered successfully.' });
+	} catch (err) {
+		res.status(500).json({ error: 'Server error.' });
+	}
+});
 
-// Password login route
-router.post('/login', (req, res) => {
+// Login route
+router.post('/login', async (req, res) => {
 	const { email, password } = req.body;
 	if (!email || !password) {
 		return res.status(400).json({ error: 'Email and password required.' });
 	}
-	const user = users.find(u => u.email === email && u.password === password);
-	if (user) {
-		// In production, issue JWT or session
-		return res.json({ success: true, message: 'Login successful.' });
-	} else {
-		return res.status(401).json({ error: 'Invalid credentials.' });
+	try {
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(401).json({ error: 'Invalid credentials.' });
+		}
+		const isMatch = await user.comparePassword(password);
+		if (!isMatch) {
+			return res.status(401).json({ error: 'Invalid credentials.' });
+		}
+		// Issue JWT
+		const token = jwt.sign(
+			{ id: user._id, username: user.username, email: user.email },
+			process.env.JWT_SECRET || 'your_jwt_secret',
+			{ expiresIn: '7d' }
+		);
+		res.json({ success: true, token, user: { username: user.username, email: user.email, fullname: user.fullname } });
+	} catch (err) {
+		res.status(500).json({ error: 'Server error.' });
 	}
 });
 

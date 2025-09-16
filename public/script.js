@@ -174,41 +174,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginFormEl = document.getElementById('loginForm');
     const signupFormEl = document.getElementById('signupForm');
     
-    loginFormEl.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        if (!username || !password) {
-            alert('Please fill in all fields');
-            return;
-        }
-        fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        })
-        .then(res => res.json().then(data => ({ status: res.status, body: data })))
-        .then(result => {
-            if (result.status === 200) {
-                alert('Login successful!');
-                // Show the registered username in nav, even if user logged in with email
-                const displayName = result.body.username || username;
-                loginBtn.textContent = displayName;
-                loginBtn.setAttribute('data-page', 'logout');
-                // Redirect to home page
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                document.getElementById('home').classList.add('active');
-                navLinks.forEach(navLink => {
-                    navLink.classList.remove('active');
-                });
-                document.querySelector('.nav-links a[data-page="home"]').classList.add('active');
-            } else {
-                alert(result.body.message || 'Login failed.');
+        loginFormEl.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
             }
-        })
-        .catch(() => alert('Network error.'));
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.token) {
+                    localStorage.setItem('coinAcademiaToken', data.token);
+                    alert('Login successful!');
+                    loginBtn.textContent = data.user.username || email;
+                    loginBtn.setAttribute('data-page', 'logout');
+                    // Redirect or update UI as needed
+                } else {
+                    alert(data.error || 'Login failed.');
+                }
+            })
+            .catch(() => alert('Network error.'));
     });
     
     signupFormEl.addEventListener('submit', function(e) {
@@ -231,22 +222,22 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Passwords do not match');
             return;
         }
-        fetch('http://localhost:3000/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        })
-        .then(res => res.json().then(data => ({ status: res.status, body: data })))
-        .then(result => {
-            if (result.status === 201) {
-                alert('Account created successfully! Please log in.');
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            } else {
-                alert(result.body.message || 'Registration failed.');
-            }
-        })
-        .catch(() => alert('Network error.'));
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message === 'Registered successfully.') {
+                    alert('Account created successfully! Please log in.');
+                    loginForm.style.display = 'block';
+                    signupForm.style.display = 'none';
+                } else {
+                    alert(data.error || 'Registration failed.');
+                }
+            })
+            .catch(() => alert('Network error.'));
     });
     
     // Simulate user login state (for demo purposes)

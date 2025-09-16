@@ -88,36 +88,6 @@ app.post('/logout', (req, res) => {
   });
 });
 
-// Registration endpoint
-app.post('/api/register', (req, res) => {
-  const { username, email, password, fullname } = req.body;
-  if (!username || !email || !password || !fullname) {
-    return res.status(400).json({ message: 'All fields are required.' });
-  }
-  if (users.find(u => u.email === email || u.username === username)) {
-    return res.status(409).json({ message: 'User already exists.' });
-  }
-  // In production, hash the password!
-  users.push({ username, email, password, fullname });
-  res.status(201).json({ message: 'User registered successfully.' });
-});
-
-// Login endpoint
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid credentials.' });
-  }
-  // Use full name if available, otherwise username
-  const userName = encodeURIComponent(user.fullname || user.username);
-  // Use a default icon for password login users
-  const userPhoto = encodeURIComponent('/images/icon1.png');
-  res.json({
-    message: 'Login successful.',
-    redirect: `/main?googleUser=${userName}&googlePhoto=${userPhoto}`
-  });
-});
 
 
 
