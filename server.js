@@ -16,9 +16,17 @@ const users = [];
 const googleUsers = [];
 
 app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
+  origin: [
+    'http://localhost:3000',
+    'https://www.coinacademia.in',
+    'http://www.coinacademia.in'
+  ],
+  credentials: true
 }));
+// ...existing code...
+// Mount password login route
+const authRoutes = require('./routes/auth');
+app.use('/', authRoutes);
 app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',
