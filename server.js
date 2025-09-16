@@ -312,3 +312,19 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);
+
+
+// For Axios example
+import axios from 'axios';
+const API = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+});
+
+// Then use it for login
+API.post('/api/login', userCredentials)
+  .then(response => {
+    // handle success
+  })
+  .catch(error => {
+    console.error('Network Error:', error);
+  });
