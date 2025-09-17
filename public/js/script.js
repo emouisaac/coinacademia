@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (userName) {
     // Store in localStorage for persistence
     localStorage.setItem('loggedInUser', decodeURIComponent(userName));
+    // Example: Set additional profile/referral data
+    localStorage.setItem('userEmail', params.get('email') || '');
+    localStorage.setItem('userUsername', params.get('username') || '');
+    localStorage.setItem('referralCode', params.get('ref') || 'CA12345');
+    localStorage.setItem('referralLink', params.get('reflink') || 'https://www.coinacademia.in/?ref=CA12345');
   } else {
     userName = localStorage.getItem('loggedInUser');
   }
