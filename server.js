@@ -312,16 +312,3 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);
-
-
-// For Axios example
-// For Axios example
-// Use axios as required above: const axios = require('axios');
-// Example usage:
-// axios.post('/api/login', userCredentials)
-//   .then(response => {
-//     // handle success
-//   })
-//   .catch(error => {
-//     console.error('Network Error:', error);
-//   });

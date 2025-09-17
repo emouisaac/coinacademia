@@ -633,6 +633,10 @@
                                 <input type="text" id="signup-username" name="signup-username" placeholder="Choose a username" required>
                             </div>
                             <div class="form-group">
+                                <label for="signup-referral" style="color: black;">Referral Code (optional)</label>
+                                <input type="text" id="signup-referral" name="signup-referral" placeholder="Enter referral code if you have one">
+                            </div>
+                            <div class="form-group">
                                 <label for="signup-email" style="color: black;">Email</label>
                                 <input type="email" id="signup-email" required>
                             </div>
@@ -649,6 +653,19 @@
                             <button type="button" class="google-login-btn" id="google-signup-btn">
                                 <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width:20px;vertical-align:middle;margin-right:8px;">Sign Up with Google
                             </button>
+                    <script>
+                    // Auto-fill referral code and show signup form if present in URL
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const params = new URLSearchParams(window.location.search);
+                        const ref = params.get('ref');
+                        if (ref) {
+                            document.getElementById('signup-referral').value = ref;
+                            // Show signup form and hide login form
+                            document.querySelector('.signup-form').style.display = 'block';
+                            document.querySelector('.login-form').style.display = 'none';
+                        }
+                    });
+                    </script>
                     </form>
                     <p class="login-link">Already have an account? <a href="#" id="show-login">Log in</a></p>
                 </div>

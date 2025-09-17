@@ -35,8 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Example: Set additional profile/referral data
     localStorage.setItem('userEmail', params.get('email') || '');
     localStorage.setItem('userUsername', params.get('username') || '');
-    localStorage.setItem('referralCode', params.get('ref') || 'CA12345');
-    localStorage.setItem('referralLink', params.get('reflink') || 'https://www.coinacademia.in/?ref=CA12345');
+    // Generate unique referral code/link if not already set for this user
+    let referralCode = localStorage.getItem('referralCode_' + userName);
+    if (!referralCode) {
+      referralCode = 'CA' + Math.random().toString(36).substr(2, 8).toUpperCase();
+      localStorage.setItem('referralCode_' + userName, referralCode);
+      localStorage.setItem('referralLink_' + userName, 'https://www.coinacademia.in/?ref=' + referralCode);
+    }
+    // Store for easy access
+    localStorage.setItem('referralCode', referralCode);
+    localStorage.setItem('referralLink', localStorage.getItem('referralLink_' + userName));
   } else {
     userName = localStorage.getItem('loggedInUser');
   }
