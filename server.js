@@ -1,7 +1,7 @@
+const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const axios = require('axios');
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
@@ -28,6 +28,8 @@ app.use(cors({
 // Mount password login route
 const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
+
+// Mount API routes
 app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',
@@ -270,7 +272,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api', apiRoutes);
 
 // SPA routes
 const spaRoutes = ['/', '/courses', '/about', '/blogs', '/affiliate', '/login'];

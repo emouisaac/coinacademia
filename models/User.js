@@ -6,6 +6,8 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fullname: { type: String },
+  referralCode: { type: String },
+  referralLink: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

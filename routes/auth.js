@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 // Registration route
 router.post('/register', async (req, res) => {
-	const { username, email, password, fullname } = req.body;
+	const { username, email, password, fullname, referralCode, referralLink } = req.body;
 	if (!username || !email || !password) {
 		return res.status(400).json({ error: 'All fields are required.' });
 	}
@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
 		if (existingUser) {
 			return res.status(409).json({ error: 'User already exists.' });
 		}
-		const user = new User({ username, email, password, fullname });
+		const user = new User({ username, email, password, fullname, referralCode, referralLink });
 		await user.save();
 		res.status(201).json({ message: 'Registered successfully.' });
 	} catch (err) {
@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
 			process.env.JWT_SECRET || 'your_jwt_secret',
 			{ expiresIn: '7d' }
 		);
-		res.json({ success: true, token, user: { username: user.username, email: user.email, fullname: user.fullname } });
+	res.json({ success: true, token, user: { username: user.username, email: user.email, fullname: user.fullname, referralCode: user.referralCode, referralLink: user.referralLink } });
 	} catch (err) {
 		res.status(500).json({ error: 'Server error.' });
 	}
