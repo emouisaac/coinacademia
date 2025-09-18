@@ -17,6 +17,29 @@ const config = {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // Payment button login check
+  setTimeout(() => {
+    const paymentSelectors = [
+      'a[href*="payments/pay.html"]',
+      'a.enroll-btn',
+      'button.pay-btn',
+      'button.payment-btn',
+      'button.buy-btn',
+      'button.purchase-btn',
+      'button.cta-btn'
+    ];
+    paymentSelectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const userName = localStorage.getItem('loggedInUser');
+          if (!userName) {
+            e.preventDefault();
+            showLoginPopup();
+          }
+        });
+      });
+    });
+  }, 500);
   // First load
   fetchMarketData();
 
