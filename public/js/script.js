@@ -48,32 +48,70 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     userName = localStorage.getItem('loggedInUser');
   }
-  if (userName) {
-    const profileNameContainer = document.getElementById('profile-name-container');
-    if (profileNameContainer) {
-      profileNameContainer.style.display = 'inline-block';
-      profileNameContainer.textContent = userName;
-      profileNameContainer.style.fontWeight = 'bold';
-      profileNameContainer.style.marginLeft = '8px';
-      profileNameContainer.style.color = '#3a8ee6'; // Light blue to match nav link
-      // Add logout on click
-      profileNameContainer.style.cursor = 'pointer';
-      profileNameContainer.title = 'Click to log out';
-      profileNameContainer.onclick = function() {
-        if (confirm('Do you want to log out?')) {
-          // Call logout endpoint and redirect to home
-          fetch('/logout', { method: 'POST' })
-            .finally(() => {
-              localStorage.removeItem('loggedInUser');
-              window.location.href = '/';
-            });
-        }
-      };
-      // Hide login button
-      const loginBtn = document.getElementById('login-btn');
-      if (loginBtn) loginBtn.style.display = 'none';
-    }
+  const profileNameContainer = document.getElementById('profile-name-container');
+  if (userName && profileNameContainer) {
+    profileNameContainer.style.display = 'inline-block';
+    profileNameContainer.textContent = userName;
+    profileNameContainer.style.fontWeight = 'bold';
+    profileNameContainer.style.marginLeft = '8px';
+    profileNameContainer.style.color = '#3a8ee6'; // Light blue to match nav link
+    // Add logout on click
+    profileNameContainer.style.cursor = 'pointer';
+    profileNameContainer.title = 'Click to log out';
+    profileNameContainer.onclick = function() {
+      if (confirm('Do you want to log out?')) {
+        // Call logout endpoint and redirect to home
+        fetch('/logout', { method: 'POST' })
+          .finally(() => {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = '/';
+          });
+      }
+    };
+    // Hide login button
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) loginBtn.style.display = 'none';
+  } else {
+    // Show popup notification to login
+    showLoginPopup();
   }
+// Popup notification for login
+function showLoginPopup() {
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
+  overlay.style.background = 'rgba(0,0,0,0.4)';
+  overlay.style.zIndex = 9999;
+
+  // Create popup box
+  const popup = document.createElement('div');
+  popup.style.position = 'fixed';
+  popup.style.top = '50%';
+  popup.style.left = '50%';
+  popup.style.transform = 'translate(-50%, -50%)';
+  popup.style.background = '#fff';
+  popup.style.padding = '32px 24px';
+  popup.style.borderRadius = '12px';
+  popup.style.boxShadow = '0 2px 16px rgba(0,0,0,0.2)';
+  popup.style.textAlign = 'center';
+  popup.innerHTML = '<h3>Please log in to access your dashboard.</h3><p style="margin:12px 0 0 0;color:#d9534f;font-size:15px;">You are not logged in.</p><button id="login-popup-btn" style="margin-top:16px;padding:8px 24px;background:#3a8ee6;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:16px;">Log In</button>';
+
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  document.getElementById('login-popup-btn').onclick = function() {
+    overlay.remove();
+    document.getElementById('login-btn').click();
+  };
+  // Remove popup if overlay is clicked
+  overlay.onclick = function(e) {
+    if (e.target === overlay) overlay.remove();
+  };
+}
 });
 
 /**
