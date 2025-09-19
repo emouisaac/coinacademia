@@ -1579,7 +1579,7 @@
             if (emailEl) emailEl.textContent = user.email || '';
             if (usernameEl) usernameEl.textContent = user.username || '';
             if (refCodeEl) refCodeEl.textContent = user.referralCode || '';
-            if (refLinkInput) refLinkInput.value = user.referralCode ? 'https://coinacademia.com/ref/' + user.referralCode : '';
+            if (refLinkInput) refLinkInput.value = user.referralLink || '';
             // Default rank to V0 if user has no invites and has not bought any V package
             let rank = user.rank;
             if (!rank || rank === '' || rank === undefined || rank === null) {

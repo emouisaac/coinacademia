@@ -5,25 +5,44 @@ document.addEventListener('DOMContentLoaded', function() {
   fetch('/api/user/profile', {
     method: 'GET',
     headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('token')
+      'Authorization': 'Bearer ' + localStorage.getItem('coinAcademiaToken')
     }
   })
     .then(response => response.json())
     .then(data => {
+      const nameElem = document.querySelector('.user-name');
+      const emailElem = document.querySelector('.user-email');
+      const usernameElem = document.querySelector('.user-username');
+      const refCodeElem = document.getElementById('ref-code');
+      const refLinkElem = document.getElementById('ref-link-input');
       if (data.success && data.user) {
         const user = data.user;
-        document.querySelector('.user-name').textContent = user.fullname || user.username || '';
-        document.querySelector('.user-email').textContent = user.email || '';
-        document.querySelector('.user-username').textContent = user.username || '';
-        document.getElementById('ref-code').textContent = user.referralCode || '';
-        document.getElementById('ref-link-input').value = user.referralLink || '';
-        document.querySelector('.profile-card').style.display = 'block';
+        nameElem.textContent = user.fullname || user.username || '';
+        emailElem.textContent = user.email || '';
+        usernameElem.textContent = user.username || '';
+        refCodeElem.textContent = user.referralCode || '';
+        refLinkElem.value = user.referralLink || '';
       } else {
-        document.querySelector('.profile-card').style.display = 'none';
+        nameElem.textContent = 'Please log in to see your profile.';
+        emailElem.textContent = '';
+        usernameElem.textContent = '';
+        refCodeElem.textContent = '';
+        refLinkElem.value = '';
       }
+      document.querySelector('.profile-card').style.display = 'block';
     })
     .catch(() => {
-      document.querySelector('.profile-card').style.display = 'none';
+      const nameElem = document.querySelector('.user-name');
+      const emailElem = document.querySelector('.user-email');
+      const usernameElem = document.querySelector('.user-username');
+      const refCodeElem = document.getElementById('ref-code');
+      const refLinkElem = document.getElementById('ref-link-input');
+      nameElem.textContent = 'Please log in to see your profile.';
+      emailElem.textContent = '';
+      usernameElem.textContent = '';
+      refCodeElem.textContent = '';
+      refLinkElem.value = '';
+      document.querySelector('.profile-card').style.display = 'block';
     });
 });
 
@@ -53,9 +72,21 @@ setTimeout(() => {
     ];
     paymentSelectors.forEach(sel => {
       document.querySelectorAll(sel).forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          const userName = localStorage.getItem('loggedInUser');
-          if (!userName) {
+        btn.addEventListener('click', async function(e) {
+          // Check login by calling backend profile API
+          try {
+            const res = await fetch('/api/user/profile', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+              }
+            });
+            const data = await res.json();
+            if (!data.success || !data.user) {
+              e.preventDefault();
+              showLoginPopup();
+            }
+          } catch {
             e.preventDefault();
             showLoginPopup();
           }

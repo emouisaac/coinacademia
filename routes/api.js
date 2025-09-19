@@ -19,6 +19,24 @@ router.get('/user/profile', authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ success: false, error: 'User not found.' });
+
+    let updated = false;
+    // Auto-generate referralCode if missing
+    if (!user.referralCode) {
+      user.referralCode = (user.username || user._id.toString()).slice(0, 8).toUpperCase() + Math.floor(1000 + Math.random() * 9000);
+      updated = true;
+    }
+    // Auto-generate referralLink if missing
+    if (!user.referralLink) {
+      // You can customize the base URL as needed
+      const baseUrl = req.protocol + '://' + req.get('host');
+      user.referralLink = `${baseUrl}/register?ref=${user.referralCode}`;
+      updated = true;
+    }
+    if (updated) {
+      await user.save();
+    }
+
     res.json({ success: true, user: {
       username: user.username,
       email: user.email,
