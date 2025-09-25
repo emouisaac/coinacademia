@@ -1,3 +1,4 @@
+
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -10,6 +11,15 @@ const affiliateRoutes = require('./back/affiliate');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Placeholder for /api/create-checkout
+app.post('/api/create-checkout', (req, res) => {
+  // In production, integrate with your payment provider here
+  res.json({
+    hosted_url: 'https://nowpayments.io/payment/mock-checkout',
+    message: 'Mock checkout created successfully.'
+  });
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
