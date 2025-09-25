@@ -75,7 +75,7 @@
         border: 1px solid #555;
     }
     body.dark-mode .btn-google img {
-        filter: brightness(0) invert(1) grayscale(1) contrast(100);
+        filter: none;
     }
     </style>
 </head>
@@ -985,7 +985,7 @@
     </footer>
 
     <!-- Login Modal -->
-    <div class="modal" id="loginModal">
+    <div class="modal" id="loginModal" style="background-color: rgb(0, 0, 0);">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
             <div id="login-form-container">
@@ -1012,7 +1012,9 @@
                         </div>
                     </div>
                     <div style="text-align:center; margin: 1rem 0;">or</div>
-                    <button type="button" class="btn btn-google" id="google-login-btn" style="margin: 0 auto;">
+                    <button type="button" class="btn btn-google" id="google-register-btn" style="font-size:0.95rem; padding:0.3rem 1rem; margin: 0 auto; color: #000; background: #fffefe; border: 1px solid #000000; transition: background 0.2s, transform 0.2s;"
+                        onmouseover="this.style.background='#f0f0f0'; this.style.transform='scale(1.05)';"
+                        onmouseout="this.style.background='#fffefe'; this.style.transform='scale(1)';">
                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:20px; height:20px;"> Login with Google
                     </button>
                 </form>
@@ -1050,7 +1052,9 @@
                         <button type="submit" class="btn btn-primary" style="font-size:0.95rem; padding:0.3rem 2rem; margin: 0 auto;">Register</button>
                     </div>
                     <div style="text-align:center; margin: 0.7rem 0; font-size:0.95rem;">or</div>
-                    <button type="button" class="btn btn-google" id="google-register-btn" style="font-size:0.95rem; padding:0.3rem 1rem; margin: 0 auto;">
+                    <button type="button" class="btn btn-google" id="google-register-btn" style="font-size:0.95rem; padding:0.3rem 1rem; margin: 0 auto; color: #000; background: #fffefe; border: 1px solid #000000; transition: background 0.2s, transform 0.2s;"
+                        onmouseover="this.style.background='#f0f0f0'; this.style.transform='scale(1.05)';"
+                        onmouseout="this.style.background='#fffefe'; this.style.transform='scale(1)';">
                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:18px; height:18px; vertical-align:middle;"> Register with Google
                     </button>
                 </form>
