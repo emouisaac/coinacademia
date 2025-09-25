@@ -1007,10 +1007,12 @@
                         <button type="button" class="btn btn-outline-light" id="close-login-modal" style="display: none;">Cancel</button>
                         <button type="button" class="btn btn-primary" id="send-code-btn" style="margin-right: 10px; display: none;"></button>
                         <button type="submit" class="btn btn-success" id="login-code-btn" style="display:none;">Login with Code</button>
-                        <button type="submit" class="btn btn-primary" id="login-password-btn">Login with Password</button>
+                        <div style="margin: 0 auto;">
+                            <button type="submit" class="btn btn-primary" id="login-password-btn">Login with Password</button>
+                        </div>
                     </div>
                     <div style="text-align:center; margin: 1rem 0;">or</div>
-                    <button type="button" class="btn btn-google" id="google-login-btn">
+                    <button type="button" class="btn btn-google" id="google-login-btn" style="margin: 0 auto;">
                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:20px; height:20px;"> Login with Google
                     </button>
                 </form>
@@ -1048,11 +1050,11 @@
                         <button type="submit" class="btn btn-primary" style="font-size:0.95rem; padding:0.3rem 1rem;">Register</button>
                     </div>
                     <div style="text-align:center; margin: 0.7rem 0; font-size:0.95rem;">or</div>
-                    <button type="button" class="btn btn-google" id="google-register-btn" style="font-size:0.95rem; padding:0.3rem 1rem;">
+                    <button type="button" class="btn btn-google" id="google-register-btn" style="font-size:0.95rem; padding:0.3rem 1rem; margin: 0 auto;">
                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:18px; height:18px; vertical-align:middle;"> Register with Google
                     </button>
                 </form>
-                <div class="account-switch">
+                <div class="account-switch" style="text-align:center; margin-top:1rem; font-size:0.95rem;">
                     Have an account? 
                     <a id="switch-to-login" style="color:#007bff; cursor:pointer; text-decoration:underline;" onclick="
                         document.getElementById('login-form-container').style.display = '';
