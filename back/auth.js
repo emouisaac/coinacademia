@@ -65,7 +65,11 @@ router.post('/verify-code', (req, res) => {
 // Get current user info (for frontend after Google login)
 router.get('/user', (req, res) => {
   if (req.isAuthenticated && req.isAuthenticated() && req.user) {
-    res.json({ displayName: req.user.displayName, email: req.user.email });
+    res.json({
+      displayName: req.user.displayName,
+      email: req.user.email,
+      referralCode: req.user.referralCode || null
+    });
   } else {
     res.status(401).json({});
   }
@@ -102,15 +106,26 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     let user = users.find(u => u.googleId === profile.id);
-    if (!user) {
-      user = {
-        googleId: profile.id,
-        displayName: profile.displayName,
-        email: profile.emails && profile.emails[0] ? profile.emails[0].value : '',
-      };
-      users.push(user);
-    }
-    return done(null, user);
+if (!user) {
+  // Generate a unique 6-character alphanumeric referral code
+  function generateReferralCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code;
+    do {
+      code = Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    } while (users.some(u => u.referralCode === code));
+    return code;
+  }
+  user = {
+    googleId: profile.id,
+    displayName: profile.displayName,
+    email: profile.emails && profile.emails[0] ? profile.emails[0].value : '',
+    referralCode: generateReferralCode()
+  };
+  users.push(user);
+  saveUsers(users);
+}
+return done(null, user);
   }
 ));
 
