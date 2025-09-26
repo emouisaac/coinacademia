@@ -8,7 +8,12 @@ const authRoutes = require('./back/auth');
 const paymentRoutes = require('./back/payment');
 const affiliateRoutes = require('./back/affiliate');
 
+
 const app = express();
+// Parse JSON and urlencoded bodies BEFORE any routes or middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const PORT = process.env.PORT || 3000;
 
 const axios = require('axios');
