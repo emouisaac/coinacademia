@@ -2,7 +2,9 @@
   {
     "username": "zex",
     "email": "emouisaac1@gmail.com",
-    "password": "Ap256256"
+    "password": "Ap256256",
+    "googleId": "114205672586956969287",
+    "displayName": "Isaac Emou"
   },
   {
     "googleId": "116255486560330647172",
@@ -13,5 +15,30 @@
     "username": "zex3",
     "email": "musicjesus88@gmail.com",
     "password": "Ap.256256"
+  },
+  {
+    "username": "coina",
+    "email": "coinacademia.in@gmail.co",
+    "password": "Ap.256256"
+  },
+  {
+    "username": "try",
+    "email": "tryagain@gmail.com",
+    "password": "Ap256256"
+  },
+  {
+    "username": "try1",
+    "email": "anothert@gmail.com",
+    "password": "Ap256256"
+  },
+  {
+    "username": "emouisaac",
+    "email": "emouisaac@gmail.com",
+    "password": "256256"
+  },
+  {
+    "username": "emouisaac1",
+    "email": "emouisaac15@gmail.com",
+    "password": "Ap256256"
   }
 ]

@@ -662,6 +662,9 @@
                             <h5>Your Referral Link</h5>
                             <div class="referral-link">https://coinacademia.in?ref=COINACAD123</div>
                         </div>
+
+                        <!-- Set Password Button (hidden by default, shown by JS if needed) -->
+                        <button id="set-password-btn" class="btn btn-warning" style="margin-top:1rem; display:none;">Set Password</button>
                     </div>
                     
                     <!-- Stats Card -->
@@ -991,11 +994,11 @@
             <div id="login-form-container">
                 <h3 class="modal-title">Login to Your Account</h3>
                 <form id="loginForm">
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label class="form-label" for="login-identifier">Username or Email</label>
                         <input type="text" class="form-input" id="login-identifier" placeholder="Enter username or email" required>
                     </div>
-                    <div class="form-group" id="password-group">
+                    <div class="form-group" id="password-group" style="display: none;">
                         <label class="form-label" for="login-password">Password</label>
                         <input type="password" class="form-input" id="login-password" autocomplete="current-password">
                     </div>
@@ -1007,17 +1010,20 @@
                         <button type="button" class="btn btn-outline-light" id="close-login-modal" style="display: none;">Cancel</button>
                         <button type="button" class="btn btn-primary" id="send-code-btn" style="margin-right: 10px; display: none;"></button>
                         <button type="submit" class="btn btn-success" id="login-code-btn" style="display:none;">Login with Code</button>
-                        <div style="margin: 0 auto;">
+                        <div style="margin: 0 auto; display: none;">
                             <button type="submit" class="btn btn-primary" id="login-password-btn">Login with Password</button>
                         </div>
                     </div>
-                    <div style="text-align:center; margin: 10px auto;">or</div>
+                    <div style="text-align:center; margin: 10px auto; display: none;">or</div>
                     <button type="button" class="btn btn-google" id="google-login-btn" style="font-size:0.95rem; padding:0.3rem 1rem; margin: 0 auto; color: #000; background: #fffefe; border: 1px solid #000000; transition: background 0.2s, transform 0.2s;"
                         onmouseover="this.style.background='#f0f0f0'; this.style.transform='scale(1.05)';"
                         onmouseout="this.style.background='#fffefe'; this.style.transform='scale(1)';">
                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:20px; height:20px;"> Login with Google
                     </button>
                 </form>
+                <div style="text-align:center; margin-top:1rem; display: none;">
+                  <a id="forgot-password-link" style="color:#007bff; cursor:pointer; text-decoration:underline;">Forgot password?</a>
+                </div>
                 <div class="account-switch" style="text-align:center; margin-top:1rem;">
                     Don't have an account? 
                     <a id="switch-to-register" style="color:#007bff; cursor:pointer; text-decoration:underline;" onclick="
@@ -1027,6 +1033,39 @@
                     ">Register</a>
                 </div>
             </div>
+        <!-- Forgot Password Modal -->
+        <div class="modal" id="forgotPasswordModal" style="display:none; background-color:rgba(0,0,0,0.7);">
+            <div class="modal-content">
+                <button class="modal-close" id="close-forgot-password-modal">&times;</button>
+                <h3 class="modal-title">Reset Your Password</h3>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label class="form-label" for="forgot-email">Email</label>
+                        <input type="email" class="form-input" id="forgot-email" required autocomplete="email">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Send Reset Code</button>
+                    </div>
+                </form>
+                <form id="resetPasswordForm" style="display:none; margin-top:1rem;">
+                    <div class="form-group">
+                        <label class="form-label" for="reset-code">Reset Code</label>
+                        <input type="text" class="form-input" id="reset-code" maxlength="6" required autocomplete="one-time-code">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="reset-new-password">New Password</label>
+                        <input type="password" class="form-input" id="reset-new-password" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="reset-confirm-password">Confirm Password</label>
+                        <input type="password" class="form-input" id="reset-confirm-password" required autocomplete="new-password">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Reset Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
             
             <div id="register-form-container" style="display:none;">
                 <h3 class="modal-title" style="font-size:1.2rem; margin-bottom:1rem;">Create an Account</h3>
@@ -1066,6 +1105,27 @@
                     ">Login</a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Set Password Modal -->
+    <div class="modal" id="setPasswordModal" style="display:none; background-color:rgba(0,0,0,0.7);">
+        <div class="modal-content">
+            <button class="modal-close" id="close-set-password-modal">&times;</button>
+            <h3 class="modal-title">Set Your Password</h3>
+            <form id="setPasswordForm">
+                <div class="form-group">
+                    <label class="form-label" for="new-password">New Password</label>
+                    <input type="password" class="form-input" id="new-password" required autocomplete="new-password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="confirm-password">Confirm Password</label>
+                    <input type="password" class="form-input" id="confirm-password" required autocomplete="new-password">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Set Password</button>
+                </div>
+            </form>
         </div>
     </div>
 
