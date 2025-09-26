@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Starter Park - Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4ff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      width: 90%;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      padding: 32px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .welcome-code {
+      font-size: 2em;
+      font-weight: bold;
+      color: #0052ff;
+      letter-spacing: 2px;
+      margin: 20px 0;
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 12px 0;
+      border: 1px dashed #0052ff;
+      display: inline-block;
+    }
+    .perk-list {
+      text-align: left;
+      margin: 20px auto 30px auto;
+      max-width: 400px;
+      padding-left: 0;
+    }
+    .perk-list li {
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+    .info {
+      color: #444;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Starter Park!</h1>
+    <p>Congratulations on unlocking your crypto journey. Here is your exclusive welcome code:</p>
+    <div class="welcome-code" id="welcome-code"></div>
+    <h2>Starter Park Perks</h2>
+    <ul class="perk-list">
+      <li>Learn the fundamentals of cryptocurrency</li>
+      <li>Understand blockchain technology</li>
+      <li>Secure investing tips &amp; strategies</li>
+    </ul>
+    <div class="info">
+      Use your welcome code to access exclusive starter resources and community perks.<br>
+      <span style="color:#0052ff;">Happy learning!</span>
+    </div>
+    <button id="starter-resources-btn" style="margin-top:30px; padding:12px 28px; font-size:1.1em; background:#0052ff; color:#fff; border:none; border-radius:6px; cursor:pointer; transition:background 0.2s;">Go to Starter Resources</button>
+  </div>
+  <script>
+    // Generate a random welcome code for the user
+    function generateWelcomeCode() {
+      const prefix = 'STARTER-';
+      const random = Math.random().toString(36).substr(2, 8).toUpperCase();
+      return prefix + random;
+    }
+    document.getElementById('welcome-code').textContent = generateWelcomeCode();
+
+    // Redirect button handler
+    document.getElementById('starter-resources-btn').onclick = function() {
+      window.location.href = '../starter-resources.html';
+    };
+  </script>
+</body>
+</html>

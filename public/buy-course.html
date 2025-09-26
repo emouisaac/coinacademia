@@ -188,6 +188,18 @@
   </div>
 
   <script>
+    // Helper to map courseKey to the correct course file
+    function getCourseSuccessFile(courseKey) {
+      switch (courseKey) {
+        case 'starter': return 'course1.html';
+        case 'trading': return 'course2.html';
+        case 'technical': return 'course3.html';
+        case 'portfolio': return 'course4.html';
+        case 'masterclass': return 'course5.html';
+        default: return 'course1.html';
+      }
+    }
+
     // Enhanced Course Data
     const courses = {
       'starter': {
@@ -281,8 +293,8 @@
         // Update USDT estimate
         updateUSDT(course.newPrice);
         
-        // Setup payment button
-        setupPaymentButton(course);
+  // Setup payment button
+  setupPaymentButton(course, courseKey);
       } else {
         showError('Invalid course selected');
       }
@@ -313,7 +325,7 @@
     }
 
     // Setup payment button with enhanced error handling
-    function setupPaymentButton(course) {
+    function setupPaymentButton(course, courseKey) {
       const buyBtn = document.getElementById('buyBtn');
       const errorDiv = document.getElementById('error');
       
@@ -323,18 +335,18 @@
         errorDiv.textContent = '';
         buyBtn.disabled = true;
         buyBtn.textContent = 'Processing Payment...';
-        
+      
         try {
-          // Create payment request
+          // Create payment request data
           const paymentData = {
             price_amount: course.newPrice,
             price_currency: 'usd',
             order_id: course.orderId,
             order_description: course.orderDesc,
-            success_url: window.location.origin + '/course-unlocked.html',
+            success_url: window.location.origin + '/courses.html/' + getCourseSuccessFile(courseKey),
             cancel_url: window.location.href
           };
-          
+
           console.log('Sending payment request:', paymentData);
           
           const response = await fetch('https://www.coinacademia.in/api/create-checkout', {
@@ -367,7 +379,8 @@
           } else {
             throw new Error(data.error || 'Payment URL not received');
           }
-        } catch (error) {
+        } 
+        catch (error) {
           console.error('Payment error:', error);
           errorDiv.textContent = `Payment error: ${error.message}`;
           errorDiv.style.display = 'block';
