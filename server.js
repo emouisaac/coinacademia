@@ -15,9 +15,10 @@ const axios = require('axios');
 require('dotenv').config();
 
 const cors = require('cors');
-
-// Enable CORS for all routes
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://www.coinacademia.in'],
+  credentials: true
+}));
 
 // Real integration for /api/create-checkout
 app.post('/api/create-checkout', async (req, res) => {
