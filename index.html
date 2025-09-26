@@ -636,7 +636,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Your Profile</h3>
                         </div>
-                        <img src="public/images/images.png" alt="Profile Picture" class="profile-pic">
+                        <img src="../images/images.png" alt="Profile Picture" class="profile-pic">
                         <h4 class="user-name" id="affiliate-name">Guest User</h4>
                         <p class="user-email" id="affiliate-email">guest@example.com</p>
                         <p class="user-username" id="affiliate-username">@guest</p>
@@ -1070,8 +1070,44 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="/script.js"></script>
+        <script>
+            // User Profile Card Dynamic Update
+            document.addEventListener('DOMContentLoaded', function() {
+                function setProfileCard(user) {
+                    if (user) {
+                        document.getElementById('affiliate-name').textContent = user.displayName || user.username || 'User';
+                        // Mask email: show first 2 letters, then ......, then @domain
+                        if (user.email && user.email.includes('@')) {
+                            const [name, domain] = user.email.split('@');
+                            const masked = name.length > 2 ? name.slice(0,2) + '......' : name + '......';
+                            document.getElementById('affiliate-email').textContent = masked + '@' + domain;
+                        } else {
+                            document.getElementById('affiliate-email').textContent = 'No email';
+                        }
+                        document.getElementById('affiliate-username').textContent = user.username ? '@' + user.username : (user.displayName ? '@' + user.displayName.replace(/\s/g, '').toLowerCase() : '@user');
+                    }
+                }
+                // Try localStorage first
+                const cabUser = localStorage.getItem('cabUser');
+                if (cabUser) {
+                    try {
+                        const user = JSON.parse(cabUser);
+                        setProfileCard(user);
+                    } catch (e) {}
+                } else {
+                    // Fallback to backend session (Google login)
+                    fetch('/auth/user', { credentials: 'include' })
+                        .then(res => res.json())
+                        .then(user => {
+                            if (user && (user.displayName || user.email)) {
+                                setProfileCard(user);
+                            }
+                        });
+                }
+            });
+        </script>
     </body>
     </html>
