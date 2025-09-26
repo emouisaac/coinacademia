@@ -1,4 +1,3 @@
-
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -12,13 +11,35 @@ const affiliateRoutes = require('./back/affiliate');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Placeholder for /api/create-checkout
-app.post('/api/create-checkout', (req, res) => {
-  // In production, integrate with your payment provider here
-  res.json({
-    hosted_url: 'https://nowpayments.io/payment/mock-checkout',
-    message: 'Mock checkout created successfully.'
-  });
+const axios = require('axios');
+require('dotenv').config();
+
+const cors = require('cors');
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Real integration for /api/create-checkout
+app.post('/api/create-checkout', async (req, res) => {
+  try {
+    const response = await axios.post('https://api.nowpayments.io/v1/invoice', {
+      price_amount: req.body.price_amount,
+      price_currency: req.body.price_currency,
+      order_id: req.body.order_id,
+      order_description: req.body.order_description,
+      success_url: req.body.success_url,
+      cancel_url: req.body.cancel_url
+    }, {
+      headers: {
+        'x-api-key': process.env.NOWPAYMENTS_API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    res.json({ hosted_url: response.data.invoice_url });
+  } catch (error) {
+    console.error('NOWPayments API error:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: 'Payment creation failed', details: error.message, np_response: error.response ? error.response.data : null });
+  }
 });
 
 app.use(bodyParser.json());
