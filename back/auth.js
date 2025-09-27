@@ -1,3 +1,29 @@
+// Endpoint to request referral code for existing users
+router.post('/request-referral', (req, res) => {
+  if (!req.isAuthenticated || !req.isAuthenticated() || !req.user) {
+    return res.status(401).json({ message: 'Not authenticated' });
+  }
+  if (req.user.referralCode) {
+    return res.json({ referralCode: req.user.referralCode });
+  }
+  // Generate a unique referral code
+  function generateReferralCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code;
+    do {
+      code = Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    } while (users.some(u => u.referralCode === code));
+    return code;
+  }
+  req.user.referralCode = generateReferralCode();
+  // Update user in users array and save
+  const idx = users.findIndex(u => u.googleId === req.user.googleId || u.email === req.user.email);
+  if (idx !== -1) {
+    users[idx].referralCode = req.user.referralCode;
+    saveUsers(users);
+  }
+  res.json({ referralCode: req.user.referralCode });
+});
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();

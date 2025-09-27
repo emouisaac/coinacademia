@@ -651,17 +651,18 @@
                                 <div class="progress-fill" style="width: 30%"></div>
                             </div>
                         </div>
-                        
-                        <div class="referral-section">
-                            <h5>Your Referral Code</h5>
-                            <div class="referral-code">
-                                <span id="referral-code-text">COINACAD123</span>
-                                <button class="copy-btn" id="copy-referral-btn">Copy</button>
+
+                            <div class="referral-section">
+                                <h5>Your Referral Code</h5>
+                                <div class="referral-code">
+                                    <span id="referral-code-text"></span>
+                                    <button class="copy-btn" id="copy-referral-btn">Copy</button>
+                                </div>
+                                <h5>Your Referral Link</h5>
+                                <div class="referral-link" id="referral-link-text"></div>
                             </div>
-                            
-                            <h5>Your Referral Link</h5>
-                            <div class="referral-link">https://coinacademia.in?ref=COINACAD123</div>
-                        </div>
+                        
+
 
                         <!-- Set Password Button (hidden by default, shown by JS if needed) -->
                         <button id="set-password-btn" class="btn btn-warning" style="margin-top:1rem; display:none;">Set Password</button>
@@ -1148,6 +1149,14 @@
                             document.getElementById('affiliate-email').textContent = 'No email';
                         }
                         document.getElementById('affiliate-username').textContent = user.username ? '@' + user.username : (user.displayName ? '@' + user.displayName.replace(/\s/g, '').toLowerCase() : '@user');
+                            // Set referral code and link if present
+                            if (user.referralCode) {
+                                document.getElementById('referral-code-text').textContent = user.referralCode;
+                                document.getElementById('referral-link-text').textContent = `https://coinacademia.in?ref=${user.referralCode}`;
+                            } else {
+                                document.getElementById('referral-code-text').textContent = 'Not assigned';
+                                document.getElementById('referral-link-text').textContent = 'Not assigned';
+                            }
                     }
                 }
                 // Try localStorage first

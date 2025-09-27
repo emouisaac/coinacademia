@@ -1,5 +1,5 @@
 // Helper: Get query param
-function getQueryParam(name) {
+    function getQueryParam(name) {
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
 }
