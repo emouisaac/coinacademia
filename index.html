@@ -640,15 +640,15 @@
                         <h4 class="user-name" id="affiliate-name">Guest User</h4>
                         <p class="user-email" id="affiliate-email">guest@example.com</p>
                         <p class="user-username" id="affiliate-username">@guest</p>
-                        <span class="user-rank">Bronze Affiliate</span>
+                        <span class="user-rank" id="affiliate-rank">Starter Affiliate</span>
                         
                         <div class="progress-container">
                             <div class="progress-label">
-                                <span>Progress to Silver</span>
-                                <span>30%</span>
+                                <span id="progress-label">Progress to Bronze</span>
+                                <span id="progress-value">20%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 30%"></div>
+                                <div class="progress-fill" id="progress-bar-fill" style="width: 0%"></div>
                             </div>
                         </div>
 
@@ -675,20 +675,24 @@
                         </div>
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <div class="stat-value">15</div>
+                                <div class="stat-value" id="affiliate-total-referrals">0</div>
                                 <div class="stat-label">Total Referrals</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">8</div>
+                                <div class="stat-value" id="affiliate-active-referrals">0</div>
                                 <div class="stat-label">Active Referrals</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">$1,250</div>
+                                <div class="stat-value" id="affiliate-total-earnings">0</div>
                                 <div class="stat-label">Total Earnings</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">$300</div>
+                                <div class="stat-value" id="affiliate-pending-payout">0</div>
                                 <div class="stat-label">Pending Payout</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="affiliate-stat-rank">Starter Affiliate</div>
+                                <div class="stat-label">Current Rank</div>
                             </div>
                         </div>
                         
@@ -791,30 +795,8 @@
                                     <th>Commission</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>2023-05-15</td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>$150</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>2023-06-22</td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>$90</td>
-                                </tr>
-                                <tr>
-                                    <td>Mike Johnson</td>
-                                    <td>2023-04-10</td>
-                                    <td><span class="status-badge status-inactive">Inactive</span></td>
-                                    <td>$60</td>
-                                </tr>
-                                <tr>
-                                    <td>Sarah Williams</td>
-                                    <td>2023-07-05</td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>$120</td>
+                            <tbody id="referrals-table-body">
+                                <!-- Referrals will be populated by JS -->
                                 </tr>
                             </tbody>
                         </table>
@@ -834,23 +816,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2023-06-30</td>
-                                    <td>$500</td>
-                                    <td><span class="status-badge status-active">Paid</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2023-05-31</td>
-                                    <td>$360</td>
-                                    <td><span class="status-badge status-active">Paid</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2023-04-30</td>
-                                    <td>$190</td>
-                                    <td><span class="status-badge status-active">Paid</span></td>
-                                </tr>
+                                <!-- Payouts will be populated by JS -->
                             </tbody>
                         </table>
+                    </div>
+                    <!-- Withdraw Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Withdraw Earnings</h3>
+                        </div>
+                        <div class="withdraw-section" style="padding: 1.5rem; text-align: center;">
+                            <div style="margin-bottom: 1rem;">
+                                <span style="font-size: 1.2em; font-weight: 600;">Available for Withdrawal:</span>
+                                <span id="withdraw-amount" style="font-size: 1.2em; color: #009e3c; margin-left: 8px;">$0</span>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <input type="number" id="withdraw-input" min="10" step="1" placeholder="Enter amount ($10 min)" style="width:180px; font-size:1em; padding:0.4em; border-radius:6px; border:1px solid #ccc; margin-right:10px;">
+                                <button id="withdraw-btn" class="btn btn-success" style="font-size: 1.1em; padding: 0.6em 2em; vertical-align:middle;">
+                                    <span id="withdraw-btn-text">Withdraw</span>
+                                    <span id="withdraw-spinner" style="display:none; margin-left:8px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                </button>
+                            </div>
+                            <div id="withdraw-message" style="margin-top: 1rem; color: #b8860b; font-weight:600;"></div>
+                        </div>
                     </div>
                 </div>
             </div>

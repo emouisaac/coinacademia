@@ -1,3 +1,53 @@
+// Populate referrals table
+// Populate payout history table
+function populatePayoutHistory(username) {
+    fetch(`/affiliate/payouts?username=${encodeURIComponent(username)}`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector('#affiliate-page .card:nth-of-type(5) tbody');
+            if (!tbody) return;
+            if (data.payouts && data.payouts.length > 0) {
+                tbody.innerHTML = data.payouts.map(payout => `
+                    <tr>
+                        <td>${payout.date}</td>
+                        <td>$${payout.amount}</td>
+                        <td><span class="status-badge status-${payout.status.toLowerCase()}">${payout.status}</span></td>
+                    </tr>
+                `).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="3">No payouts yet.</td></tr>';
+            }
+        })
+        .catch(() => {
+            const tbody = document.querySelector('#affiliate-page .card:nth-of-type(5) tbody');
+            if (tbody) tbody.innerHTML = '<tr><td colspan="3">Error loading payouts.</td></tr>';
+        });
+}
+function populateReferralsTable(username) {
+    fetch(`/affiliate/referrals?username=${encodeURIComponent(username)}`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('referrals-table-body');
+            if (!tbody) return;
+            if (data.referrals && data.referrals.length > 0) {
+                tbody.innerHTML = data.referrals.map(ref => `
+                    <tr>
+                        <td>${ref.name}</td>
+                        <td>${ref.joinDate}</td>
+                        <td><span class="status-badge status-${ref.status.toLowerCase()}">${ref.status}</span></td>
+                        <td>$${ref.commission}</td>
+                    </tr>
+                `).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4">No referrals yet.</td></tr>';
+            }
+        })
+        .catch(() => {
+            const tbody = document.getElementById('referrals-table-body');
+            if (tbody) tbody.innerHTML = '<tr><td colspan="4">Error loading referrals.</td></tr>';
+        });
+}
+
 // Helper: Get query param
     function getQueryParam(name) {
     const url = new URL(window.location.href);
@@ -6,6 +56,76 @@
 
 // On every page load, check backend for logged-in user (Google or local)
 document.addEventListener('DOMContentLoaded', function() {
+    // Always activate withdraw button after DOM is loaded
+    function activateWithdrawButton() {
+        const cabUser = localStorage.getItem('cabUser');
+        if (cabUser) {
+            const user = JSON.parse(cabUser);
+            if (user && user.username) {
+                // Update withdraw amount
+                fetch(`/affiliate/dashboard?username=${encodeURIComponent(user.username)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('withdraw-amount').textContent = `$${data.pendingPayout || 0}`;
+                    });
+                // Withdraw button logic
+                const withdrawBtn = document.getElementById('withdraw-btn');
+                const withdrawBtnText = document.getElementById('withdraw-btn-text');
+                const withdrawSpinner = document.getElementById('withdraw-spinner');
+                const withdrawInput = document.getElementById('withdraw-input');
+                const withdrawMessage = document.getElementById('withdraw-message');
+                if (withdrawBtn) {
+                    withdrawBtn.onclick = async function() {
+                        withdrawBtn.disabled = true;
+                        withdrawBtnText.style.display = 'none';
+                        withdrawSpinner.style.display = 'inline-block';
+                        withdrawMessage.textContent = '';
+                        // Get current pending payout
+                        const res = await fetch(`/affiliate/dashboard?username=${encodeURIComponent(user.username)}`);
+                        const data = await res.json();
+                        const available = data.pendingPayout || 0;
+                        let amount = parseFloat(withdrawInput.value);
+                        if (isNaN(amount) || amount < 10) {
+                            withdrawMessage.textContent = 'Minimum withdrawal is $10.';
+                            withdrawBtn.disabled = false;
+                            withdrawBtnText.style.display = 'inline';
+                            withdrawSpinner.style.display = 'none';
+                            return;
+                        }
+                        if (amount > available) {
+                            withdrawMessage.textContent = 'You cannot withdraw more than your available balance.';
+                            withdrawBtn.disabled = false;
+                            withdrawBtnText.style.display = 'inline';
+                            withdrawSpinner.style.display = 'none';
+                            return;
+                        }
+                        // Send withdrawal request
+                        const payoutRes = await fetch('/affiliate/payout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username: user.username, amount })
+                        });
+                        const payoutData = await payoutRes.json();
+                        if (payoutRes.ok) {
+                            withdrawMessage.textContent = payoutData.message || `Withdrawal of $${amount} submitted!`;
+                            document.getElementById('withdraw-amount').textContent = `$${available - amount}`;
+                            withdrawInput.value = '';
+                            populatePayoutHistory(user.username);
+                            updateAffiliateStatistics(user.username);
+                        } else {
+                            withdrawMessage.textContent = payoutData.message || 'Withdrawal failed. Please try again.';
+                        }
+                        withdrawBtn.disabled = false;
+                        withdrawBtnText.style.display = 'inline';
+                        withdrawSpinner.style.display = 'none';
+                    };
+                }
+            }
+        }
+    }
+    // Activate on initial load and after navigation
+    activateWithdrawButton();
+    document.querySelector('.nav-link[data-page="affiliate"]').addEventListener('click', activateWithdrawButton);
     // If password/code login, persist via localStorage until manual logout
     const cabUser = localStorage.getItem('cabUser');
     if (cabUser) {
@@ -84,6 +204,13 @@ function showPage(pageId) {
     
     // Scroll to top
     window.scrollTo(0, 0);
+
+        // Always activate withdraw button when affiliate dashboard is shown
+        if (pageId === 'affiliate') {
+            if (typeof activateWithdrawButton === 'function') {
+                activateWithdrawButton();
+            }
+        }
 }
 
 
@@ -758,3 +885,150 @@ window.addEventListener('load', animateCounters);
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas()
 })();
+
+function updateAffiliateStatistics(username) {
+    document.getElementById('affiliate-total-referrals').textContent = 'Loading...';
+    document.getElementById('affiliate-active-referrals').textContent = 'Loading...';
+    document.getElementById('affiliate-total-earnings').textContent = 'Loading...';
+    document.getElementById('affiliate-pending-payout').textContent = 'Loading...';
+    document.getElementById('progress-label').textContent = 'Progress to Silver';
+    document.getElementById('progress-value').textContent = 'Loading...';
+    document.getElementById('progress-bar-fill').style.width = '0%';
+    document.getElementById('affiliate-rank').textContent = 'Bronze Affiliate';
+
+    fetch(`/affiliate/dashboard?username=${encodeURIComponent(username)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && typeof data.referrals === 'number') {
+                document.getElementById('affiliate-total-referrals').textContent = data.referrals;
+                document.getElementById('affiliate-active-referrals').textContent = data.referrals;
+                document.getElementById('affiliate-total-earnings').textContent = `$${data.commission || 0}`;
+                document.getElementById('affiliate-pending-payout').textContent = `$${(data.pendingPayout || 0)}`;
+                let requiredSilver = 12;
+                let requiredBronze = 3;
+                let progress = 0;
+                if (data.referrals && data.referrals > 0) {
+                    if (data.referrals < requiredBronze) {
+                        document.getElementById('affiliate-rank').textContent = 'Starter Affiliate';
+                        document.getElementById('progress-label').textContent = 'Progress to Bronze';
+                        progress = Math.min(100, Math.round((data.referrals / requiredBronze) * 100));
+                        document.getElementById('progress-value').textContent = progress + '%';
+                        document.getElementById('progress-bar-fill').style.width = progress + '%';
+                    } else if (data.referrals < requiredSilver) {
+                        document.getElementById('affiliate-rank').textContent = 'Bronze Affiliate';
+                        document.getElementById('progress-label').textContent = 'Progress to Silver';
+                        progress = Math.min(100, Math.round((data.referrals / requiredSilver) * 100));
+                        document.getElementById('progress-value').textContent = progress + '%';
+                        document.getElementById('progress-bar-fill').style.width = progress + '%';
+                    } else {
+                        document.getElementById('affiliate-rank').textContent = 'Silver Affiliate';
+                        document.getElementById('progress-label').textContent = 'Progress to Silver';
+                        document.getElementById('progress-value').textContent = '100%';
+                        document.getElementById('progress-bar-fill').style.width = '100%';
+                    }
+                } else {
+                    document.getElementById('affiliate-rank').textContent = 'Starter Affiliate';
+                    document.getElementById('progress-label').textContent = 'Progress to Bronze';
+                    document.getElementById('progress-value').textContent = '20%';
+                    document.getElementById('progress-bar-fill').style.width = '20%';
+                }
+            } else {
+                document.getElementById('affiliate-total-referrals').textContent = 'No data';
+                document.getElementById('affiliate-active-referrals').textContent = 'No data';
+                document.getElementById('affiliate-total-earnings').textContent = 'No data';
+                document.getElementById('affiliate-pending-payout').textContent = 'No data';
+                document.getElementById('affiliate-rank').textContent = 'Starter Affiliate';
+                document.getElementById('progress-label').textContent = 'Progress to Bronze';
+                document.getElementById('progress-value').textContent = '20%';
+                document.getElementById('progress-bar-fill').style.width = '20%';
+            }
+        })
+        .catch(() => {
+            document.getElementById('affiliate-total-referrals').textContent = 'No data';
+            document.getElementById('affiliate-active-referrals').textContent = 'No data';
+            document.getElementById('affiliate-total-earnings').textContent = 'No data';
+            document.getElementById('affiliate-pending-payout').textContent = 'No data';
+            document.getElementById('affiliate-rank').textContent = 'Starter Affiliate';
+            document.getElementById('progress-label').textContent = 'Progress to Bronze';
+            document.getElementById('progress-value').textContent = '20%';
+            document.getElementById('progress-bar-fill').style.width = '20%';
+        });
+}
+
+// Call updateAffiliateStatistics when affiliate dashboard is shown
+function showAffiliateDashboardIfUser() {
+            // Update withdraw amount
+            fetch(`/affiliate/dashboard?username=${encodeURIComponent(user.username)}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('withdraw-amount').textContent = `$${data.pendingPayout || 0}`;
+                });
+            // Withdraw button logic
+            const withdrawBtn = document.getElementById('withdraw-btn');
+            const withdrawBtnText = document.getElementById('withdraw-btn-text');
+            const withdrawSpinner = document.getElementById('withdraw-spinner');
+            const withdrawInput = document.getElementById('withdraw-input');
+            const withdrawMessage = document.getElementById('withdraw-message');
+            if (withdrawBtn) {
+                withdrawBtn.onclick = async function() {
+                    withdrawBtn.disabled = true;
+                    withdrawBtnText.style.display = 'none';
+                    withdrawSpinner.style.display = 'inline-block';
+                    withdrawMessage.textContent = '';
+                    // Get current pending payout
+                    const res = await fetch(`/affiliate/dashboard?username=${encodeURIComponent(user.username)}`);
+                    const data = await res.json();
+                    const available = data.pendingPayout || 0;
+                    let amount = parseFloat(withdrawInput.value);
+                    if (isNaN(amount) || amount < 10) {
+                        withdrawMessage.textContent = 'Minimum withdrawal is $10.';
+                        withdrawBtn.disabled = false;
+                        withdrawBtnText.style.display = 'inline';
+                        withdrawSpinner.style.display = 'none';
+                        return;
+                    }
+                    if (amount > available) {
+                        withdrawMessage.textContent = 'You cannot withdraw more than your available balance.';
+                        withdrawBtn.disabled = false;
+                        withdrawBtnText.style.display = 'inline';
+                        withdrawSpinner.style.display = 'none';
+                        return;
+                    }
+                    // Send withdrawal request
+                    const payoutRes = await fetch('/affiliate/payout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: user.username, amount })
+                    });
+                    const payoutData = await payoutRes.json();
+                    if (payoutRes.ok) {
+                        withdrawMessage.textContent = payoutData.message || `Withdrawal of $${amount} submitted!`;
+                        document.getElementById('withdraw-amount').textContent = `$${available - amount}`;
+                        withdrawInput.value = '';
+                        populatePayoutHistory(user.username);
+                        updateAffiliateStatistics(user.username);
+                    } else {
+                        withdrawMessage.textContent = payoutData.message || 'Withdrawal failed. Please try again.';
+                    }
+                    withdrawBtn.disabled = false;
+                    withdrawBtnText.style.display = 'inline';
+                    withdrawSpinner.style.display = 'none';
+                };
+            }
+    const cabUser = localStorage.getItem('cabUser');
+    if (cabUser) {
+        const user = JSON.parse(cabUser);
+        if (user && user.username) {
+            updateAffiliateStatistics(user.username);
+            populateReferralsTable(user.username);
+            populatePayoutHistory(user.username);
+        }
+    }
+}
+
+const affiliateNavLink = document.querySelector('.nav-link[data-page=\"affiliate\"]');
+if (affiliateNavLink) {
+    affiliateNavLink.addEventListener('click', () => {
+        showAffiliateDashboardIfUser();
+    });
+}
