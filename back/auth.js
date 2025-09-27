@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 // Endpoint to request referral code for existing users
 router.post('/request-referral', (req, res) => {
   if (!req.isAuthenticated || !req.isAuthenticated() || !req.user) {
@@ -25,8 +27,6 @@ router.post('/request-referral', (req, res) => {
   res.json({ referralCode: req.user.referralCode });
 });
 require('dotenv').config();
-const express = require('express');
-const router = express.Router();
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
