@@ -624,7 +624,7 @@ function populateHomeCourses() {
                         <span class="old-price" style="color:#aaa;text-decoration:line-through;font-size:1em;">$${course.oldPrice}</span>
                         <span class="new-price" style="color:#009e3c;font-weight:bold;font-size:1.1em;margin-left:8px;">$${course.newPrice}</span>
                         <span class="discount-badge" style="background:#ffe066;color:#b8860b;border-radius:12px;padding:2px 8px;font-size:0.9em;margin-left:6px;font-weight:600;">${course.discount}</span>
-                        <a href="/buy-course.html?course=${course.key}" class="btn btn-primary" style="display:block;margin-top:10px;">Enroll Now</a>
+                        <a href="#" class="btn btn-primary enroll-btn" data-course="${course.key}" style="display:block;margin-top:10px;">Enroll Now</a>
                     </div>
                 </div>
             </div>
@@ -653,7 +653,7 @@ function populateAllCourses() {
                         <span class="old-price" style="color:#aaa;text-decoration:line-through;font-size:1em;">$${course.oldPrice}</span>
                         <span class="new-price" style="color:#009e3c;font-weight:bold;font-size:1.1em;margin-left:8px;">$${course.newPrice}</span>
                         <span class="discount-badge" style="background:#ffe066;color:#b8860b;border-radius:12px;padding:2px 8px;font-size:0.9em;margin-left:6px;font-weight:600;">${course.discount}</span>
-                        <a href="/buy-course.html?course=${course.key}" class="btn btn-primary" style="display:block;margin-top:10px;">Enroll Now</a>
+                        <a href="#" class="btn btn-primary enroll-btn" data-course="${course.key}" style="display:block;margin-top:10px;">Enroll Now</a>
                     </div>
                 </div>
             </div>
@@ -684,6 +684,86 @@ document.addEventListener('DOMContentLoaded', function() {
     populateHomeCourses();
     populateAllCourses();
     populateBlogs();
+
+    // Enroll Now button: grant access if logged in, otherwise prompt login
+    document.body.addEventListener('click', function(e) {
+        // Support both direct and delegated clicks
+        let target = e.target;
+        if (target.classList.contains('enroll-btn')) {
+            e.preventDefault();
+            // Always check backend for login status
+            fetch('/auth/user', { credentials: 'include' })
+                .then(res => res.json())
+                .then(user => {
+                    if (user && (user.username || user.displayName)) {
+                        // User is logged in, redirect to buy-course
+                        const courseKey = target.getAttribute('data-course');
+                        window.location.href = `/buy-course.html?course=${courseKey}`;
+                    } else {
+                        // Not logged in, show popup notification first
+                        let notification = document.getElementById('enroll-notification');
+                        if (!notification) {
+                            notification = document.createElement('div');
+                            notification.id = 'enroll-notification';
+                            notification.style.position = 'fixed';
+                            notification.style.top = '20px';
+                            notification.style.left = '50%';
+                            notification.style.transform = 'translateX(-50%)';
+                            notification.style.background = '#fffae6';
+                            notification.style.color = '#b8860b';
+                            notification.style.padding = '16px 32px';
+                            notification.style.borderRadius = '8px';
+                            notification.style.boxShadow = '0 2px 8px rgba(0,0,0,0.12)';
+                            notification.style.zIndex = '9999';
+                            notification.style.fontWeight = '600';
+                            notification.style.fontSize = '1.1em';
+                            notification.style.display = 'none';
+                            notification.textContent = 'Please log in to enroll in a course.';
+                            document.body.appendChild(notification);
+                        }
+                        notification.style.display = 'block';
+                        setTimeout(function() {
+                            notification.style.display = 'none';
+                            var loginModal = document.getElementById('loginModal');
+                            if (loginModal) {
+                                loginModal.style.display = 'flex';
+                            }
+                        }, 1500);
+                    }
+                })
+                .catch(() => {
+                    // On error, treat as not logged in
+                    let notification = document.getElementById('enroll-notification');
+                    if (!notification) {
+                        notification = document.createElement('div');
+                        notification.id = 'enroll-notification';
+                        notification.style.position = 'fixed';
+                        notification.style.top = '20px';
+                        notification.style.left = '50%';
+                        notification.style.transform = 'translateX(-50%)';
+                        notification.style.background = '#fffae6';
+                        notification.style.color = '#b8860b';
+                        notification.style.padding = '16px 32px';
+                        notification.style.borderRadius = '8px';
+                        notification.style.boxShadow = '0 2px 8px rgba(0,0,0,0.12)';
+                        notification.style.zIndex = '9999';
+                        notification.style.fontWeight = '600';
+                        notification.style.fontSize = '1.1em';
+                        notification.style.display = 'none';
+                        notification.textContent = 'Please log in to enroll in a course.';
+                        document.body.appendChild(notification);
+                    }
+                    notification.style.display = 'block';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                        var loginModal = document.getElementById('loginModal');
+                        if (loginModal) {
+                            loginModal.style.display = 'flex';
+                        }
+                    }, 1500);
+                });
+        }
+    });
 });
 
 // Simulate Market Data (in a real app, this would come from an API)

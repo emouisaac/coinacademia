@@ -407,7 +407,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <i class="fab fa-bitcoin"></i>
+                <img src="/images/icon1.png" alt="Coin Academia Logo" style="height: 50px; width: 80px; margin-right: 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(58,54,196,0.12); object-fit: contain;">
                 <span>Coin Academia</span>
             </div>
             <nav>
@@ -429,7 +429,37 @@
 
     <main class="container">
         <h1 class="page-title">Complete Chart Patterns Guide</h1>
+        <img src="/images/All Charts.jpg" alt="Chart Patterns" class="main-chart-image">
         <p class="page-subtitle">Master technical analysis with our comprehensive collection of chart patterns. Learn to identify potential market reversals, continuations, and breakouts to enhance your trading strategies.</p>
+        
+    <style>
+    
+    /* Responsive style for main chart image */
+        .main-chart-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            display: block;
+            margin: 2rem auto 2rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(58,54,196,0.10);
+            object-fit: contain;
+        }
+
+        @media (max-width: 900px) {
+            .main-chart-image {
+                max-width: 100%;
+                margin: 1.5rem auto;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-chart-image {
+                max-width: 98vw;
+                margin: 1rem auto;
+                border-radius: 8px;
+            }
+        }
+    </style>
         
         <div class="pattern-nav">
             <button class="nav-btn active" data-target="wedges">Wedges</button>
