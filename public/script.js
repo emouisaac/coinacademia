@@ -133,6 +133,22 @@ document.addEventListener('DOMContentLoaded', function() {
         loginBtn.style.display = 'none';
         profileNameContainer.style.display = 'block';
         profileNameContainer.innerHTML = `<a href="#" id="logout-btn">${user.username}</a>`;
+        // Show upline details if user has a referral code
+        if (user.referral) {
+            fetch(`/affiliate/upline?referral=${encodeURIComponent(user.referral)}`)
+                .then(res => res.json())
+                .then(upline => {
+                    document.getElementById('upline-name').textContent = (upline.name && upline.name.trim()) ? upline.name : 'Not assigned';
+                    document.getElementById('upline-contact').textContent = (upline.contact && upline.contact.trim()) ? upline.contact : 'Not assigned';
+                })
+                .catch(() => {
+                    document.getElementById('upline-name').textContent = 'Not assigned';
+                    document.getElementById('upline-contact').textContent = 'Not assigned';
+                });
+        } else {
+            document.getElementById('upline-name').textContent = 'Not assigned';
+            document.getElementById('upline-contact').textContent = 'Not assigned';
+        }
     } else {
         // Otherwise, check backend for Google login
         fetch('/auth/user', { credentials: 'include' })
@@ -146,10 +162,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     loginBtn.style.display = 'inline-block';
                     profileNameContainer.style.display = 'none';
                 }
+                // No referral info for Google login
+                document.getElementById('upline-name').textContent = 'Not assigned';
+                document.getElementById('upline-contact').textContent = 'Not assigned';
             })
             .catch(() => {
                 loginBtn.style.display = 'inline-block';
                 profileNameContainer.style.display = 'none';
+                document.getElementById('upline-name').textContent = 'Not assigned';
+                document.getElementById('upline-contact').textContent = 'Not assigned';
             });
     }
 });
@@ -472,6 +493,19 @@ if (registerForm) {
             });
             const data = await res.json();
             if (res.ok) {
+                // If referral is present, fetch upline details and display
+                if (referral) {
+                    fetch(`/affiliate/upline?referral=${encodeURIComponent(referral)}`)
+                        .then(res => res.json())
+                        .then(upline => {
+                            document.getElementById('upline-name').textContent = upline.name || 'Not assigned';
+                            document.getElementById('upline-contact').textContent = upline.contact || 'Not assigned';
+                        })
+                        .catch(() => {
+                            document.getElementById('upline-name').textContent = 'Not assigned';
+                            document.getElementById('upline-contact').textContent = 'Not assigned';
+                        });
+                }
                 alert('Registration successful! Please log in.');
                 // Switch to login modal
                 if (registerFormContainer && loginFormContainer) {
@@ -1106,9 +1140,35 @@ function showAffiliateDashboardIfUser() {
     }
 }
 
-const affiliateNavLink = document.querySelector('.nav-link[data-page=\"affiliate\"]');
+const affiliateNavLink = document.querySelector('.nav-link[data-page="affiliate"]');
+let affiliateAutoRefreshInterval = null;
+function startAffiliateAutoRefresh() {
+    // Clear any previous interval
+    if (affiliateAutoRefreshInterval) clearInterval(affiliateAutoRefreshInterval);
+    // Immediately update
+    showAffiliateDashboardIfUser();
+    // Set interval to refresh every 30 seconds
+    affiliateAutoRefreshInterval = setInterval(() => {
+        showAffiliateDashboardIfUser();
+    }, 30000);
+}
+function stopAffiliateAutoRefresh() {
+    if (affiliateAutoRefreshInterval) {
+        clearInterval(affiliateAutoRefreshInterval);
+        affiliateAutoRefreshInterval = null;
+    }
+}
 if (affiliateNavLink) {
     affiliateNavLink.addEventListener('click', () => {
-        showAffiliateDashboardIfUser();
+        startAffiliateAutoRefresh();
     });
 }
+// Stop auto-refresh when navigating away from affiliate page
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const pageId = link.getAttribute('data-page');
+        if (pageId !== 'affiliate') {
+            stopAffiliateAutoRefresh();
+        }
+    });
+});

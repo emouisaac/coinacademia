@@ -181,16 +181,33 @@ router.get('/google/callback', passport.authenticate('google', {
 
 // Registration (local, not used for Google)
 router.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, referral } = req.body;
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Username, email, and password required' });
   }
   if (users.find(u => u.username === username || u.email === email)) {
     return res.status(400).json({ message: 'User already exists' });
   }
-  users.push({ username, email, password });
+  // Link to upline if referral code is provided
+  let upline = null;
+  if (referral) {
+    upline = users.find(u => u.referralCode === referral);
+  }
+  const newUser = { username, email, password };
+  if (referral) newUser.referral = referral;
+  users.push(newUser);
   try {
     saveUsers(users);
+    // Update upline affiliate stats if referral code is valid
+    if (upline && upline.username) {
+      // Simulate affiliate update via API call
+      const fetch = require('node-fetch');
+      fetch('http://localhost:3000/affiliate/referral', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: upline.username, referralName: username, paid: false })
+      });
+    }
     console.log('User registered and saved:', { username, email });
     res.json({ message: 'Registration successful' });
   } catch (err) {

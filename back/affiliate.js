@@ -57,6 +57,15 @@ router.get('/referrals', async (req, res) => {
 
 
 // Add referral (simulate)
+// Get upline details by referral code
+router.get('/upline', async (req, res) => {
+  const { referral } = req.query;
+  if (!affiliatesCollection) return res.status(500).json({ message: 'DB not ready' });
+  // Find user by referral code
+  const user = await db.collection('users').findOne({ referralCode: referral });
+  if (!user) return res.json({ name: 'Not assigned', contact: 'Not assigned' });
+  res.json({ name: user.displayName || user.username || 'Not assigned', contact: user.email || 'Not assigned' });
+});
 
 // Add referral (simulate)
 router.post('/referral', async (req, res) => {
