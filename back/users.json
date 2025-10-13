@@ -1,40 +1,26 @@
 [
   {
     "username": "zex",
-    "email": "emouisaac1@gmail.com",
-    "password": "Ap256256",
     "googleId": "114205672586956969287",
-    "displayName": "Isaac Emou"
+    "displayName": "Isaac Emou",
+    "email": "emouisaac1@gmail.com",
+    "referralCode": "cEOfW8",
+    "password": "Ap256256"
   },
   {
     "googleId": "116255486560330647172",
     "displayName": "Isaac Emou",
-    "email": "isaacemou2@gmail.com"
+    "email": "isaacemou2@gmail.com",
+    "referralCode": "CeO1W2",
+    "password": "Ap256256"
   },
   {
     "username": "zex3",
+    "googleId": "526243486561730647178",
+    "displayName": "Isaac Emou",
     "email": "musicjesus88@gmail.com",
+    "referralCode": "cEOfW8",
     "password": "Ap.256256"
-  },
-  {
-    "username": "coina",
-    "email": "coinacademia.in@gmail.co",
-    "password": "Ap.256256"
-  },
-  {
-    "username": "try",
-    "email": "tryagain@gmail.com",
-    "password": "Ap256256"
-  },
-  {
-    "username": "try1",
-    "email": "anothert@gmail.com",
-    "password": "Ap256256"
-  },
-  {
-    "username": "emouisaac",
-    "email": "emouisaac@gmail.com",
-    "password": "256256"
   },
   {
     "username": "emouisaac1",

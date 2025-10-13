@@ -1778,3 +1778,15 @@ footer {
     color: var(--text-secondary);
     margin-bottom: 2rem;
 }
+
+
+
+
+
+
+/*---POLICY----------------------------------------*/
+.P-Policy{
+    padding: 5% 5% 5% 5%;
+    
+    background-image: linear-gradient( rgba(251, 251, 251, 0.721),rgba(195, 195, 201, 0.863)), url("/public/images/abt2.jpg");
+}
