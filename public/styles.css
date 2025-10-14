@@ -1790,3 +1790,7 @@ footer {
     
     background-image: linear-gradient( rgba(251, 251, 251, 0.721),rgba(195, 195, 201, 0.863)), url("../images/abt2.jpg");
 }
+
+.dark-mode .P-Policy {
+    background-image: linear-gradient(rgba(30, 33, 44, 0.85), rgba(30, 33, 44, 0.93)), url("../images/abt2.jpg");
+}
