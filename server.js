@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const path = require('path');
 const passport = require('passport');
 
@@ -11,8 +10,8 @@ const affiliateRoutes = require('./back/affiliate');
 
 const app = express();
 // Parse JSON and urlencoded bodies BEFORE any routes or middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
@@ -48,8 +47,6 @@ app.post('/api/create-checkout', async (req, res) => {
   }
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: 'your_secret_key',
   resave: false,

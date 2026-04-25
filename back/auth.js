@@ -31,6 +31,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const fetch = globalThis.fetch || require('node-fetch');
 
 // In-memory store for codes: { email: { code, expires } }
 const codeStore = {};
@@ -222,7 +223,6 @@ router.post('/register', (req, res) => {
     // Update upline affiliate stats if referral code is valid
     if (upline && upline.username) {
       // Simulate affiliate update via API call
-      const fetch = require('node-fetch');
       fetch('http://localhost:3000/affiliate/referral', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
