@@ -73,12 +73,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
-
-// Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ...other routes...
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

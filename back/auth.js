@@ -125,35 +125,46 @@ function saveUsers(users) {
 let users = loadUsers();
 
 // Passport config
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CALLBACK_URL_PROD : process.env.GOOGLE_CALLBACK_URL,
-  },
-  function(accessToken, refreshToken, profile, done) {
-    let user = users.find(u => u.googleId === profile.id);
-if (!user) {
-  // Generate a unique 6-character alphanumeric referral code
-  function generateReferralCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let code;
-    do {
-      code = Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-    } while (users.some(u => u.referralCode === code));
-    return code;
-  }
-  user = {
-    googleId: profile.id,
-    displayName: profile.displayName,
-    email: profile.emails && profile.emails[0] ? profile.emails[0].value : '',
-    referralCode: generateReferralCode()
-  };
-  users.push(user);
-  saveUsers(users);
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleCallbackUrl = process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CALLBACK_URL_PROD : process.env.GOOGLE_CALLBACK_URL;
+const googleOAuthConfigured = Boolean(googleClientId && googleClientSecret && googleCallbackUrl);
+
+if (!googleOAuthConfigured) {
+  console.warn('Google OAuth is not configured. Set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL in .env to enable /auth/google.');
 }
-return done(null, user);
-  }
-));
+
+if (googleOAuthConfigured) {
+  passport.use(new GoogleStrategy({
+      clientID: googleClientId,
+      clientSecret: googleClientSecret,
+      callbackURL: googleCallbackUrl,
+    },
+    function(accessToken, refreshToken, profile, done) {
+      let user = users.find(u => u.googleId === profile.id);
+      if (!user) {
+        // Generate a unique 6-character alphanumeric referral code
+        function generateReferralCode() {
+          const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          let code;
+          do {
+            code = Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+          } while (users.some(u => u.referralCode === code));
+          return code;
+        }
+        user = {
+          googleId: profile.id,
+          displayName: profile.displayName,
+          email: profile.emails && profile.emails[0] ? profile.emails[0].value : '',
+          referralCode: generateReferralCode()
+        };
+        users.push(user);
+        saveUsers(users);
+      }
+      return done(null, user);
+    }
+  ));
+}
 
 passport.serializeUser((user, done) => {
   done(null, user.googleId);
@@ -164,20 +175,30 @@ passport.deserializeUser((id, done) => {
 });
 
 // Google OAuth routes
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+if (googleOAuthConfigured) {
+  router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: '/?login=failed',
-  session: true
-}), (req, res, next) => {
-  // Ensure session is saved before redirect
-  req.login(req.user, function(err) {
-    if (err) { return next(err); }
-    req.session.save(() => {
-      res.redirect('/?login=success');
+  router.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: '/?login=failed',
+    session: true
+  }), (req, res, next) => {
+    // Ensure session is saved before redirect
+    req.login(req.user, function(err) {
+      if (err) { return next(err); }
+      req.session.save(() => {
+        res.redirect('/?login=success');
+      });
     });
   });
-});
+} else {
+  router.get('/google', (req, res) => {
+    res.status(503).json({ message: 'Google OAuth is not configured. Please set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL.' });
+  });
+
+  router.get('/google/callback', (req, res) => {
+    res.status(503).json({ message: 'Google OAuth is not configured. Please set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL.' });
+  });
+}
 
 // Registration (local, not used for Google)
 router.post('/register', (req, res) => {
